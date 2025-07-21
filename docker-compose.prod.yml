@@ -1,0 +1,28 @@
+services:
+  frontend:
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile.prod
+    ports:
+      - "80:80"       # nginx 기본 포트
+    restart: always
+    # 볼륨 마운트 제거 (배포에선 불필요)
+
+  backend:
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile.prod
+    ports:
+      - "3000:3000"
+    restart: always
+    # 볼륨 마운트 제거
+    command: npm run start:prod   # 배포용 실행 스크립트
+
+  ai:
+    build:
+      context: ./ai
+      dockerfile: Dockerfile.prod
+    ports:
+      - "8000:8000"
+    restart: always
+    # 볼륨 마운트 제거
