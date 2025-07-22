@@ -1,0 +1,98 @@
+name: Build and Push to Docker Hub
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build and push frontend image
+      uses: docker/build-push-action@v5
+      with:
+        context: ./front-end
+        file: ./front-end/Dockerfile.prod
+        push: true
+        tags: |
+          dudwns0921/guru:frontend-latest
+          dudwns0921/guru:frontend-${{ github.sha }}
+
+    - name: Build and push backend image
+      uses: docker/build-push-action@v5
+      with:
+        context: ./back-end
+        file: ./back-end/Dockerfile.prod
+        push: true
+        tags: |
+          dudwns0921/guru:backend-latest
+          dudwns0921/guru:backend-${{ github.sha }}
+
+    - name: Build and push AI image
+      uses: docker/build-push-action@v5
+      with:
+        context: ./ai
+        file: ./ai/Dockerfile.prod
+        push: true
+        tags: |
+          dudwns0921/guru:ai-latest
+          dudwns0921/guru:ai-${{ github.sha }}
+
+    - name: Deploy to server
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        port: ${{ secrets.SERVER_PORT }}
+        script: |
+          cd /home/ubuntu/projects/guru
+          
+          # 파일 존재 확인 및 디버깅
+          echo "=== Current directory: $(pwd) ==="
+          echo "=== Files in directory: ==="
+          ls -la
+          echo "=== Checking docker-compose.prod.yml ==="
+          if [ -f "docker-compose.prod.yml" ]; then
+            echo "✅ docker-compose.prod.yml found"
+          else
+            echo "❌ docker-compose.prod.yml NOT found"
+            exit 1
+          fi
+          
+          # 최신 이미지 pull
+          echo "=== Pulling latest images ==="
+          docker pull dudwns0921/guru:frontend-latest
+          docker pull dudwns0921/guru:backend-latest
+          docker pull dudwns0921/guru:ai-latest
+          
+          # 기존 컨테이너 중지
+          echo "=== Stopping containers ==="
+          docker compose -f docker-compose.prod.yml down || true
+          
+          # 새 컨테이너 시작
+          echo "=== Starting containers ==="
+          docker compose -f docker-compose.prod.yml up -d
+          
+          # 오래된 이미지 정리
+          echo "=== Cleaning up images ==="
+          docker image prune -f
+          
+          # 상태 확인
+          echo "=== Container Status ==="
+          docker compose -f docker-compose.prod.yml ps
