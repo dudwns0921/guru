@@ -1,3 +1,3 @@
 export const getServerUrl = (): string => {
-  return 'http://localhost:3000'
+  return 'http://elioground.com:3000'
 }
