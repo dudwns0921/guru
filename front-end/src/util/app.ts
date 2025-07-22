@@ -1,3 +1,3 @@
 export const getServerUrl = (): string => {
-  return 'http://elioground.com/api'
+  return 'https://elioground.com/api'
 }
