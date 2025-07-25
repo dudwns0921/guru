@@ -44,12 +44,18 @@ function Header() {
               )}
             </button>
 
-            <button className="text-foreground hover:text-brand-600 px-3 py-2 text-sm font-medium">
+            <Link
+              to="/auth?mode=login"
+              className="text-foreground hover:text-brand-600 px-3 py-2 text-sm font-medium"
+            >
               로그인
-            </button>
-            <button className="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+            </Link>
+            <Link
+              to="/auth?mode=register"
+              className="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+            >
               회원가입
-            </button>
+            </Link>
           </div>
         </div>
       </div>
