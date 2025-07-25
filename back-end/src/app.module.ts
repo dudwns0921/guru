@@ -3,6 +3,11 @@ import { HttpModule } from '@nestjs/axios'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { CourseModule } from './course/course.module'
+import { UserModule } from './user/user.module'
+import { EnrollmentModule } from './enrollment/enrollment.module'
+import { ReviewModule } from './review/review.module'
+import { CourseViewModule } from './course-view/course-view.module'
+import { SearchHistoryModule } from './search-history/search-history.module'
 
 @Module({
   imports: [
@@ -25,6 +30,11 @@ import { CourseModule } from './course/course.module'
       }),
     }),
     CourseModule,
+    UserModule,
+    EnrollmentModule,
+    ReviewModule,
+    CourseViewModule,
+    SearchHistoryModule,
   ],
 })
 export class AppModule {}
