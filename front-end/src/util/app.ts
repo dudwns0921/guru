@@ -1,3 +1,7 @@
 export const getServerUrl = (): string => {
-  return 'https://elioground.com/guru-api/'
+  if(import.meta.env.DEV) {
+    return 'http://localhost:3000/'
+  } else {
+    return 'https://elioground.com/guru-api/'
+  }
 }

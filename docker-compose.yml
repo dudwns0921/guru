@@ -1,5 +1,17 @@
-
 services:
+  postgres:
+    image: postgres:15
+    container_name: my_postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: always
+
   frontend:
     build:
       context: ./front-end
@@ -31,3 +43,6 @@ services:
       - "8000:8000"
     volumes:
       - ./ai:/app
+
+volumes:
+  pgdata:
