@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
-import { fetchCourses } from '../../api/courseApi'
 import CourseCard from './CourseCard'
 import CourseCardSkeleton from './CourseCardSkeleton'
+import { fetchCourses } from '../api/courseApi'
 
 function CourseList() {
   const {
@@ -17,7 +17,6 @@ function CourseList() {
   if (isLoading) {
     return (
       <div className="container mx-auto p-6">
-        <h2 className="text-3xl font-bold mb-6">Courses</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {Array.from({ length: 6 }).map((_, i) => (
             <CourseCardSkeleton key={i} />
@@ -32,7 +31,6 @@ function CourseList() {
 
   return (
     <div className="container mx-auto p-6">
-      <h2 className="text-3xl font-bold mb-6">Courses</h2>
       {courses && courses.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {courses.map(course => (

@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { getServerUrl } from '../util/app'
-import type { Course } from '../types/server'
+import type { Course } from '@/types/server'
+import { getServerUrl } from '@/utils/server'
 
 // 모든 코스 가져오기
 export const fetchCourses = async (): Promise<Course[]> => {
