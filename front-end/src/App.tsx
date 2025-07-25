@@ -2,7 +2,7 @@ import { useQuery, QueryClient, QueryClientProvider } from '@tanstack/react-quer
 import axios from 'axios'
 import { getServerUrl } from './util/app'
 import type { ServerResponseMap } from './types/server'
-import CourseList from './components/CourseList'
+import CourseList from './components/course/CourseList'
 
 // 1. QueryClient 인스턴스 생성
 const queryClient = new QueryClient()
