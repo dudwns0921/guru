@@ -6,6 +6,7 @@ import {
   CardTitle,
 } from '@/shared/components/ui/card'
 import { Badge } from '@/shared/components/ui/badge'
+import { getBadgeColor } from '@/utils/badgeColors'
 import type { Course } from '@/types/server'
 
 interface CourseCardProps {
@@ -14,32 +15,33 @@ interface CourseCardProps {
 
 function CourseCard({ course }: CourseCardProps) {
   return (
-    <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+    <Card
+      className="overflow-hidden border border-border text-main transition-colors transition-shadow
+      hover:shadow-hover"
+    >
       <div className="aspect-video relative overflow-hidden">
         <img src={course.thumbnailUrl} alt={course.title} className="w-full h-full object-cover" />
       </div>
 
       <CardHeader className="pb-4">
-        <CardTitle className="text-lg line-clamp-2">{course.title}</CardTitle>
+        <CardTitle className="text-lg line-clamp-2 text-main">{course.title}</CardTitle>
         <CardDescription>
           <strong>Instructor:</strong> {course.instructor}
         </CardDescription>
       </CardHeader>
 
-      <CardContent className="pt-0">
-        {course.description && (
-          <p className="text-sm text-muted-foreground mb-4 line-clamp-3">{course.description}</p>
-        )}
+      <CardContent className="pt-0 text-sub">
+        {course.description && <p className="text-sm  mb-4 line-clamp-3">{course.description}</p>}
 
         <div className="flex flex-wrap gap-1 mb-4">
           {course.tags.map((tag, index) => (
-            <Badge key={index} variant="secondary" className="text-xs">
+            <Badge key={index} className={`text-xs ${getBadgeColor(tag)}`}>
               {tag}
             </Badge>
           ))}
         </div>
 
-        <div className="text-2xl font-bold text-primary">
+        <div className="text-2xl font-bold text-primary text-main">
           ₩{Number(course.price).toLocaleString()}
         </div>
       </CardContent>

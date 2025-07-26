@@ -16,12 +16,10 @@ function CourseList() {
   // 로딩 상태에서 사용
   if (isLoading) {
     return (
-      <div className="container mx-auto p-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <CourseCardSkeleton key={i} />
-          ))}
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <CourseCardSkeleton key={i} />
+        ))}
       </div>
     )
   }
@@ -30,7 +28,7 @@ function CourseList() {
     return <div className="text-center p-8 text-red-500">Error: {error.message}</div>
 
   return (
-    <div className="container mx-auto p-6">
+    <div>
       {courses && courses.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {courses.map(course => (
