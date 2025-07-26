@@ -21,7 +21,7 @@ export function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="h-full flex items-center justify-center">
       <div className="max-w-md w-full space-y-8">
         {/* 제목 영역 */}
         <div className="text-center">

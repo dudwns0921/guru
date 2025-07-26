@@ -3,9 +3,9 @@ import Header from './Header'
 
 function Layout() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="h-screen bg-background grid grid-rows-[max-content_1fr]">
       <Header />
-      <main>
+      <main className="overflow-y-auto">
         <Outlet />
       </main>
     </div>
