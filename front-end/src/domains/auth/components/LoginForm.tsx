@@ -1,19 +1,10 @@
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/shared/components/ui/form'
+import { Label } from '@/shared/components/ui/label'
 import { loginUser } from '../api/authApi'
-import { loginSchema, type LoginFormValues } from '../schemas/authSchemas'
-import type { User } from '@/types/server'
+import type { User, LoginUserDto } from '@/types/server'
 
 interface LoginFormProps {
   onSuccess?: (user: User) => void
@@ -22,12 +13,9 @@ interface LoginFormProps {
 }
 
 export function LoginForm({ onSuccess, onError, error }: LoginFormProps) {
-  const form = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: '',
-      password: '',
-    },
+  const [formData, setFormData] = useState<LoginUserDto>({
+    email: '',
+    password: '',
   })
 
   const loginMutation = useMutation({
@@ -44,51 +32,54 @@ export function LoginForm({ onSuccess, onError, error }: LoginFormProps) {
     },
   })
 
-  const onSubmit = (values: LoginFormValues) => {
-    loginMutation.mutate(values)
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    loginMutation.mutate(formData)
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="space-y-2">
+        <Label htmlFor="email">이메일</Label>
+        <Input
+          id="email"
           name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>이메일</FormLabel>
-              <FormControl>
-                <Input type="email" placeholder="example@example.com" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          type="email"
+          placeholder="example@example.com"
+          value={formData.email}
+          onChange={handleChange}
+          required
         />
-        <FormField
-          control={form.control}
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="password">비밀번호</Label>
+        <Input
+          id="password"
           name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>비밀번호</FormLabel>
-              <FormControl>
-                <Input type="password" placeholder="비밀번호를 입력하세요" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          type="password"
+          placeholder="비밀번호를 입력하세요"
+          value={formData.password}
+          onChange={handleChange}
+          required
         />
+      </div>
 
-        {/* 에러 메시지 */}
-        {error && <div className="text-error text-sm">{error}</div>}
+      {/* 에러 메시지 */}
+      {error && <div className="text-error text-sm">{error}</div>}
 
-        <Button
-          type="submit"
-          className="w-full bg-brand-600 hover:bg-brand-700 text-white"
-          disabled={loginMutation.isPending}
-        >
-          {loginMutation.isPending ? '로그인 중...' : '로그인'}
-        </Button>
-      </form>
-    </Form>
+      <Button
+        type="submit"
+        className="w-full bg-brand-600 hover:bg-brand-700 text-white"
+        disabled={loginMutation.isPending}
+      >
+        {loginMutation.isPending ? '로그인 중...' : '로그인'}
+      </Button>
+    </form>
   )
 }
