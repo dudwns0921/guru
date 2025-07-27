@@ -1,0 +1,31 @@
+import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common'
+import { AuthService } from './auth.service'
+import { CreateUserDto } from './dto/create-user.dto'
+import { LoginUserDto } from './dto/login-user.dto'
+import { User } from '../user/user.entity'
+
+@Controller('auth')
+export class AuthController {
+  constructor(private readonly authService: AuthService) {}
+
+  @Post('register')
+  @HttpCode(HttpStatus.CREATED)
+  async register(@Body() createUserDto: CreateUserDto): Promise<User> {
+    return await this.authService.register(createUserDto)
+  }
+
+  @Post('login')
+  @HttpCode(HttpStatus.OK)
+  async login(@Body() loginUserDto: LoginUserDto): Promise<{ user: User } | { message: string }> {
+    const user = await this.authService.validateUser(loginUserDto.email, loginUserDto.password)
+
+    if (!user) {
+      return { message: '이메일 또는 비밀번호가 올바르지 않습니다.' }
+    }
+
+    // 비밀번호는 응답에서 제외
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...userWithoutPassword } = user
+    return { user: userWithoutPassword as User }
+  }
+}

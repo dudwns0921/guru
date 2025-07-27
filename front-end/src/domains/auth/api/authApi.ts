@@ -4,7 +4,7 @@ import { getServerUrl } from '@/utils/server'
 
 // 회원가입
 export const registerUser = async (userData: CreateUserDto): Promise<User> => {
-  const response = await axios.post<User>(getServerUrl() + 'users', userData)
+  const response = await axios.post<User>(getServerUrl() + 'auth/register', userData)
   if (response.status !== 201) {
     throw new Error('Failed to register user')
   }
@@ -13,7 +13,7 @@ export const registerUser = async (userData: CreateUserDto): Promise<User> => {
 
 // 로그인
 export const loginUser = async (loginData: LoginUserDto): Promise<LoginResponse> => {
-  const response = await axios.post<LoginResponse>(getServerUrl() + 'users/login', loginData)
+  const response = await axios.post<LoginResponse>(getServerUrl() + 'auth/login', loginData)
   if (response.status !== 200) {
     throw new Error('Failed to login')
   }

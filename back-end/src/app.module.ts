@@ -3,6 +3,7 @@ import { HttpModule } from '@nestjs/axios'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { CourseModule } from './course/course.module'
+import { AuthModule } from './auth/auth.module'
 import { UserModule } from './user/user.module'
 import { EnrollmentModule } from './enrollment/enrollment.module'
 import { ReviewModule } from './review/review.module'
@@ -30,6 +31,7 @@ import { SearchHistoryModule } from './search-history/search-history.module'
       }),
     }),
     CourseModule,
+    AuthModule,
     UserModule,
     EnrollmentModule,
     ReviewModule,
