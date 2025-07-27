@@ -4,12 +4,14 @@ import { Repository } from 'typeorm'
 import * as bcrypt from 'bcrypt'
 import { User } from '../user/user.entity'
 import { CreateUserDto } from './dto/create-user.dto'
+import { JwtService } from '@nestjs/jwt'
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    private jwtService: JwtService,
   ) {}
 
   async register(createUserDto: CreateUserDto): Promise<User> {
@@ -44,5 +46,24 @@ export class AuthService {
       return user
     }
     return null
+  }
+
+  // JWT 토큰 생성 메서드 추가
+  generateTokens(user: User) {
+    const payload = {
+      sub: user.id, // 'sub'는 JWT 표준 클레임 (subject)
+      email: user.email,
+      name: user.name,
+    }
+
+    const accessToken = this.jwtService.sign(payload)
+
+    // Refresh Token (더 긴 만료시간)
+    const refreshToken = this.jwtService.sign(payload, { expiresIn: '7d' })
+
+    return {
+      accessToken,
+      refreshToken,
+    }
   }
 }

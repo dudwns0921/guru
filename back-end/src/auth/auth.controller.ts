@@ -16,16 +16,18 @@ export class AuthController {
 
   @Post('login')
   @HttpCode(HttpStatus.OK)
-  async login(@Body() loginUserDto: LoginUserDto): Promise<{ user: User } | { message: string }> {
+  async login(@Body() loginUserDto: LoginUserDto) {
     const user = await this.authService.validateUser(loginUserDto.email, loginUserDto.password)
 
     if (!user) {
       return { message: '이메일 또는 비밀번호가 올바르지 않습니다.' }
     }
 
+    const tokens = this.authService.generateTokens(user)
+
     // 비밀번호는 응답에서 제외
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...userWithoutPassword } = user
-    return { user: userWithoutPassword as User }
+    return { user: userWithoutPassword as User, ...tokens }
   }
 }
