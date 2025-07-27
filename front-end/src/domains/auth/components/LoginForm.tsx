@@ -5,6 +5,7 @@ import { Input } from '@/shared/components/ui/input'
 import { Label } from '@/shared/components/ui/label'
 import { loginUser } from '../api/authApi'
 import type { User, LoginUserDto } from '@/types/server'
+import { setTokens } from '@/utils/tokens'
 
 interface LoginFormProps {
   onSuccess?: (user: User) => void
@@ -21,7 +22,10 @@ export function LoginForm({ onSuccess, onError, error }: LoginFormProps) {
   const loginMutation = useMutation({
     mutationFn: loginUser,
     onSuccess: response => {
-      if (response.user) {
+      console.log('Login response:', response)
+      if (response.user && response.accessToken) {
+        // JWT 토큰 저장
+        setTokens(response.accessToken, response.refreshToken)
         onSuccess?.(response.user)
       } else {
         onError?.(response.message || '로그인에 실패했습니다.')

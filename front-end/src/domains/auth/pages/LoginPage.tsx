@@ -3,16 +3,19 @@ import { useNavigate, Link } from 'react-router-dom'
 import { LoginForm } from '../components/LoginForm'
 import { Card, CardContent } from '@/shared/components/ui/card'
 import type { User } from '@/types/server'
+import { useAuth } from '../hooks/useAuth'
 
 export function LoginPage() {
   const navigate = useNavigate()
   const [error, setError] = useState<string>('')
+  const { login } = useAuth()
 
   const handleLoginSuccess = (userData: User) => {
     setError('')
     console.log('Login successful:', userData)
     alert(`로그인되었습니다, ${userData.name}님!`)
-    // 로그인 성공 후 바로 홈페이지로 리디렉션
+
+    login(userData)
     navigate('/')
   }
 

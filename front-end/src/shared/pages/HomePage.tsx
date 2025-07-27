@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom'
 import CourseList from '@/domains/course/components/CourseList'
+import { useAuth } from '@/domains/auth/hooks/useAuth'
 
 function HomePage() {
+  const { isAuthenticated } = useAuth()
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="flex flex-col gap-16">
@@ -17,16 +20,28 @@ function HomePage() {
         <div>
           <h2 className="text-3xl font-bold text-center text-main mb-8">추천 강의</h2>
 
-          {/* Login Prompt */}
-          <div className="text-center py-8 bg-brand-50 dark:bg-brand-100 rounded-lg">
-            <p className="text-lg text-sub mb-4">개인화된 강의를 듣고 싶다면 로그인을 해주세요</p>
-            <Link
-              to="/auth/login"
-              className="inline-block bg-brand-600 hover:bg-brand-700 text-white px-6 py-3 rounded-lg text-lg font-medium transition-colors"
-            >
-              로그인
-            </Link>
-          </div>
+          {isAuthenticated ? (
+            // 로그인된 상태
+            <div className="text-center py-8 bg-brand-50 dark:bg-brand-100 rounded-lg">
+              <p className="text-lg text-sub mb-4">
+                개인화된 학습 경험을 시작하고 싶다면 첫 수업을 시작해보세요!
+              </p>
+              <button className="inline-block bg-brand-600 hover:bg-brand-700 text-white px-6 py-3 rounded-lg text-lg font-medium transition-colors">
+                첫 수업 시작하기
+              </button>
+            </div>
+          ) : (
+            // 로그인되지 않은 상태
+            <div className="text-center py-8 bg-brand-50 dark:bg-brand-100 rounded-lg">
+              <p className="text-lg text-sub mb-4">개인화된 강의를 듣고 싶다면 로그인을 해주세요</p>
+              <Link
+                to="/auth/login"
+                className="inline-block bg-brand-600 hover:bg-brand-700 text-white px-6 py-3 rounded-lg text-lg font-medium transition-colors"
+              >
+                로그인
+              </Link>
+            </div>
+          )}
         </div>
 
         {/* All Courses Section */}

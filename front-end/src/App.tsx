@@ -4,21 +4,24 @@ import Layout from './shared/components/Layout'
 import HomePage from './shared/pages/HomePage'
 import { LoginPage } from './domains/auth/pages/LoginPage'
 import { RegisterPage } from './domains/auth/pages/RegisterPage'
+import { AuthProvider } from './domains/auth/contexts/AuthProvider'
 
 const queryClient = new QueryClient()
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter basename="/guru">
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<HomePage />} />
-            <Route path="auth/login" element={<LoginPage />} />
-            <Route path="auth/register" element={<RegisterPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter basename="/guru">
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<HomePage />} />
+              <Route path="auth/login" element={<LoginPage />} />
+              <Route path="auth/register" element={<RegisterPage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
     </QueryClientProvider>
   )
 }

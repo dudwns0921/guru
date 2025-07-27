@@ -1,5 +1,7 @@
 export type ServerResponseMap = {
   courses: Course[]
+  'auth/login': LoginResponse
+  'auth/register': User
 }
 
 export interface Course {
@@ -32,6 +34,8 @@ export interface LoginUserDto {
 }
 
 export interface LoginResponse {
-  user?: User
+  user: User
+  accessToken: string
+  refreshToken: string
   message?: string
 }
