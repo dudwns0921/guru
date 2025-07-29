@@ -30,4 +30,15 @@ export class AuthController {
     const { password, ...userWithoutPassword } = user
     return { user: userWithoutPassword as User, ...tokens }
   }
+
+  @Post('refresh')
+  @HttpCode(HttpStatus.OK)
+  async refresh(@Body('refreshToken') refreshToken: string) {
+    if (!refreshToken) {
+      return { message: '리프레시 토큰이 필요합니다.' }
+    }
+
+    const tokens = await this.authService.refreshTokens(refreshToken)
+    return tokens
+  }
 }

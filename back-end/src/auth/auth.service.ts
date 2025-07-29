@@ -6,6 +6,12 @@ import { User } from '../user/user.entity'
 import { CreateUserDto } from './dto/create-user.dto'
 import { JwtService } from '@nestjs/jwt'
 
+interface JwtPayload {
+  sub: number
+  email: string
+  name: string
+}
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -64,6 +70,24 @@ export class AuthService {
     return {
       accessToken,
       refreshToken,
+    }
+  }
+
+  async refreshTokens(refreshToken: string) {
+    try {
+      const payload = this.jwtService.verify<JwtPayload>(refreshToken)
+      const user = await this.userRepository.findOne({
+        where: { id: payload.sub, isActive: true },
+      })
+
+      if (!user) {
+        throw new ConflictException('사용자를 찾을 수 없습니다.')
+      }
+
+      // 새 토큰 생성
+      return this.generateTokens(user)
+    } catch {
+      throw new ConflictException('리프레시 토큰이 유효하지 않습니다.')
     }
   }
 }
