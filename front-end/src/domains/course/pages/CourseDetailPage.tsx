@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
-import { fetchCourseById } from '../api/courseApi'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { enrollInCourse, fetchCourseById } from '../api/courseApi'
 import { Button } from '@/shared/components/ui/button'
 import { Badge } from '@/shared/components/ui/badge'
 import { getBadgeColor } from '@/utils/badgeColors'
@@ -18,6 +18,16 @@ function CourseDetailPage() {
     queryKey: ['courseDetail', courseId],
     queryFn: () => fetchCourseById(parseInt(courseId!)),
     enabled: !!courseId,
+  })
+
+  const enrollMutation = useMutation({
+    mutationFn: (courseId: number) => enrollInCourse(courseId),
+    onSuccess: () => {
+      alert('수강 신청이 완료되었습니다!')
+    },
+    onError: () => {
+      alert('수강 신청에 실패했습니다.')
+    },
   })
 
   if (isLoading) return <CourseDetailSkeleton />
@@ -86,6 +96,7 @@ function CourseDetailPage() {
           <Button
             className="w-full mt-8 py-4 text-xl bg-brand-600 hover:bg-brand-700 text-white rounded-lg transition-colors"
             size="lg"
+            onClick={() => enrollMutation.mutate(course.id)}
           >
             수강 신청하기
           </Button>

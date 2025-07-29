@@ -18,3 +18,11 @@ export const fetchCourseById = async (courseId: number): Promise<CourseDetail | 
   }
   return response.data
 }
+
+// 코스 등록하기
+export const enrollInCourse = async (courseId: number): Promise<void> => {
+  const response = await api.post(`enrollment`, { courseId })
+  if (response.status !== 201) {
+    throw new Error(`Failed to enroll in course with ID ${courseId}`)
+  }
+}
