@@ -1,11 +1,17 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Sun, Moon, LogOut, User } from 'lucide-react'
 import { useDarkMode } from '../hooks/useDarkMode'
 import { useAuth } from '@/domains/auth/hooks/useAuth'
 
 function Header() {
   const { isDarkMode, toggleDarkMode } = useDarkMode()
-  const { user, isAuthenticated } = useAuth()
+  const { user, isAuthenticated, logout } = useAuth()
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    logout()
+    navigate('/auth/login')
+  }
 
   return (
     <header className="shadow-sm border-b border-border">
@@ -39,7 +45,10 @@ function Header() {
                   <span>내 정보</span>
                 </button>
 
-                <button className="flex items-center space-x-1 px-3 py-2 text-sm font-medium text-main hover:text-brand-600 transition-colors">
+                <button
+                  className="flex items-center space-x-1 px-3 py-2 text-sm font-medium text-main hover:text-brand-600 transition-colors"
+                  onClick={handleLogout}
+                >
                   <LogOut className="w-4 h-4" />
                   <span>로그아웃</span>
                 </button>

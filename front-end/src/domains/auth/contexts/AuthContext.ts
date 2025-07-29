@@ -5,7 +5,7 @@ interface AuthContextType {
   user: User | null
   isAuthenticated: boolean
   login: (user: User) => void
-  logout: () => Promise<void>
+  logout: () => void
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined)

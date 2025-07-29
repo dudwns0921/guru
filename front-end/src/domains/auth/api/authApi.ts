@@ -19,11 +19,6 @@ export const loginUser = async (loginData: LoginUserDto): Promise<LoginResponse>
   return response.data
 }
 
-// 로그아웃 (토큰 무효화)
-export const logoutUser = async (): Promise<void> => {
-  await api.post('auth/logout')
-}
-
 // 리프레시 토큰으로 새 액세스 토큰 발급
 export const refreshAccessToken = async (
   refreshToken: string,

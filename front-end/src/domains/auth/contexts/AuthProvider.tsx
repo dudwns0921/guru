@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
 import { getAccessToken, hasValidAccessToken, clearTokens, decodeToken } from '@/utils/tokens'
-import { logoutUser } from '../api/authApi'
 import type { User } from '@/types/server'
 import { AuthContext } from './AuthContext'
 
@@ -52,16 +51,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   const logout = async () => {
-    try {
-      // 서버에 로그아웃 요청 (토큰 무효화)
-      await logoutUser()
-    } catch (error) {
-      console.error('로그아웃 요청 실패:', error)
-    } finally {
-      // 클라이언트 상태 정리
-      clearTokens()
-      setUser(null)
-    }
+    clearTokens()
+    setUser(null)
   }
 
   const value = {
