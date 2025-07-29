@@ -21,6 +21,7 @@
   --color-brand-600: var(--brand-600);
   --color-brand-700: var(--brand-700);
   --shadow-hover: var(--shadow-hover-value);
+  --skeleton-bg: var(--skeleton-bg);
 }
 
 :root {
@@ -43,6 +44,8 @@
   --text-sub: oklch(0.35 0.01 220);
   --text-placeholder: oklch(0.7 0.002 220);
   --text-error: oklch(0.45 0.15 15);
+
+  --skeleton-bg: oklch(0.9 0.01 220); /* 밝은 회색 */
 }
 
 .dark {
@@ -63,5 +66,7 @@
   --text-sub: oklch(0.75 0.01 220);
   --text-placeholder: oklch(0.55 0.005 220);
   --text-error: oklch(0.75 0.12 15);
+
+  --skeleton-bg: oklch(0.25 0.01 220); /* 어두운 회색 */
 }
 

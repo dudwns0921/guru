@@ -2,6 +2,7 @@ export type ServerResponseMap = {
   courses: Course[]
   'auth/login': LoginResponse
   'auth/register': User
+  'courses/:id': CourseDetail
 }
 
 export interface Course {
@@ -38,4 +39,15 @@ export interface LoginResponse {
   accessToken: string
   refreshToken: string
   message?: string
+}
+
+export interface CourseDetail {
+  id: number
+  title: string
+  description?: string
+  instructor: string
+  price: number
+  thumbnailUrl: string
+  tags: string[]
+  createdAt: string
 }

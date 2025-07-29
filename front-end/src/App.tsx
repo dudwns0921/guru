@@ -5,6 +5,7 @@ import HomePage from './shared/pages/HomePage'
 import { LoginPage } from './domains/auth/pages/LoginPage'
 import { RegisterPage } from './domains/auth/pages/RegisterPage'
 import { AuthProvider } from './domains/auth/contexts/AuthProvider'
+import CourseDetailPage from './domains/course/pages/CourseDetailPage'
 
 const queryClient = new QueryClient()
 
@@ -18,6 +19,7 @@ function App() {
               <Route index element={<HomePage />} />
               <Route path="auth/login" element={<LoginPage />} />
               <Route path="auth/register" element={<RegisterPage />} />
+              <Route path="course/:courseId" element={<CourseDetailPage />} />
             </Route>
           </Routes>
         </BrowserRouter>
