@@ -17,4 +17,10 @@ export class EnrollmentService {
     await this.enrollmentRepository.save(enrollment)
     return { success: true, enrollmentId: enrollment.id }
   }
+  async checkEnrollment(userId: number, courseId: number) {
+    const enrollment = await this.enrollmentRepository.findOne({
+      where: { user: { id: userId }, course: { id: courseId } },
+    })
+    return { enrolled: !!enrollment }
+  }
 }

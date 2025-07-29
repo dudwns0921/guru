@@ -3,6 +3,7 @@ export type ServerResponseMap = {
   'auth/login': LoginResponse
   'auth/register': User
   'courses/:id': CourseDetail
+  'enrollment/check/:courseId': enrollmentCheckResponse
 }
 
 export interface Course {
@@ -50,4 +51,8 @@ export interface CourseDetail {
   thumbnailUrl: string
   tags: string[]
   createdAt: string
+}
+
+export interface EnrollmentCheckResponse {
+  enrolled: boolean
 }

@@ -1,5 +1,5 @@
 import api from '@/lib/api'
-import type { Course, CourseDetail } from '@/types/server'
+import type { Course, CourseDetail, EnrollmentCheckResponse } from '@/types/server'
 
 // 모든 코스 가져오기
 export const fetchCourses = async (): Promise<Course[]> => {
@@ -25,4 +25,14 @@ export const enrollInCourse = async (courseId: number): Promise<void> => {
   if (response.status !== 201) {
     throw new Error(`Failed to enroll in course with ID ${courseId}`)
   }
+}
+
+export const checkEnrollment = async (courseId: number) => {
+  const response = await api.get<EnrollmentCheckResponse>(`enrollment/check`, {
+    params: { courseId },
+  })
+  if (response.status !== 200) {
+    throw new Error(`Failed to check enrollment for course with ID ${courseId}`)
+  }
+  return response.data
 }

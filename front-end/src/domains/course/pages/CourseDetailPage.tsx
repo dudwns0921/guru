@@ -1,22 +1,30 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { enrollInCourse, fetchCourseById } from '../api/courseApi'
-import { Button } from '@/shared/components/ui/button'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { enrollInCourse, fetchCourseById, checkEnrollment } from '../api/courseApi'
 import { Badge } from '@/shared/components/ui/badge'
 import { getBadgeColor } from '@/utils/badgeColors'
 import CourseDetailSkeleton from '../components/CourseDetailSkeleton'
+import type { EnrollmentCheckResponse } from '@/types/server'
+import EnrollButton from '../components/EnrollmentButton'
 
 function CourseDetailPage() {
+  const queryClient = useQueryClient()
   const { courseId } = useParams<{ courseId: string }>()
   const [tab, setTab] = useState<'intro' | 'review'>('intro')
   const {
     data: course,
-    isLoading,
-    error,
+    isLoading: isCourseLoading,
+    error: courseError,
   } = useQuery({
     queryKey: ['courseDetail', courseId],
     queryFn: () => fetchCourseById(parseInt(courseId!)),
+    enabled: !!courseId,
+  })
+
+  const { data: isEnrolled, isLoading: isEnrollmentLoading } = useQuery<EnrollmentCheckResponse>({
+    queryKey: ['checkEnrollment', courseId],
+    queryFn: () => checkEnrollment(parseInt(courseId!)),
     enabled: !!courseId,
   })
 
@@ -24,14 +32,15 @@ function CourseDetailPage() {
     mutationFn: (courseId: number) => enrollInCourse(courseId),
     onSuccess: () => {
       alert('수강 신청이 완료되었습니다!')
+      queryClient.invalidateQueries({ queryKey: ['checkEnrollment', courseId] })
     },
     onError: () => {
       alert('수강 신청에 실패했습니다.')
     },
   })
 
-  if (isLoading) return <CourseDetailSkeleton />
-  if (error || !course)
+  if (isCourseLoading) return <CourseDetailSkeleton />
+  if (courseError || !course)
     return <div className="text-main dark:text-main">강의 정보를 불러올 수 없습니다.</div>
 
   return (
@@ -93,13 +102,12 @@ function CourseDetailPage() {
               </span>
             </div>
           </div>
-          <Button
-            className="w-full mt-8 py-4 text-xl bg-brand-600 hover:bg-brand-700 text-white rounded-lg transition-colors"
-            size="lg"
+          <EnrollButton
+            isEnrollmentLoading={isEnrollmentLoading}
+            isEnrolled={isEnrolled}
             onClick={() => enrollMutation.mutate(course.id)}
-          >
-            수강 신청하기
-          </Button>
+            error={isEnrollmentLoading === false && isEnrolled === undefined}
+          />
         </div>
       ) : (
         <div>
