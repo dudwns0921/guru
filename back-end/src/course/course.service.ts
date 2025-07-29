@@ -18,4 +18,8 @@ export class CourseService {
     const course = this.courseRepository.create(courseData)
     return this.courseRepository.save(course)
   }
+
+  findOne(id: number): Promise<Course | null> {
+    return this.courseRepository.findOne({ where: { id } })
+  }
 }

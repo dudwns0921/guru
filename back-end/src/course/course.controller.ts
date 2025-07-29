@@ -1,5 +1,5 @@
 // src/course/course.controller.ts
-import { Controller, Get, Post, Body } from '@nestjs/common'
+import { Controller, Get, Post, Body, Param } from '@nestjs/common'
 import { CourseService } from './course.service'
 import { Course } from './course.entity'
 
@@ -15,5 +15,10 @@ export class CourseController {
   @Post()
   createCourse(@Body() body: Partial<Course>): Promise<Course> {
     return this.courseService.create(body)
+  }
+
+  @Get(':id')
+  getCourseById(@Param('id') id: number): Promise<Course | null> {
+    return this.courseService.findOne(id)
   }
 }
