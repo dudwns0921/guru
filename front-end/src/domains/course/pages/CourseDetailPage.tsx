@@ -1,17 +1,27 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { enrollInCourse, fetchCourseById, checkEnrollment } from '../api/courseApi'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { fetchCourseById, checkEnrollment, enrollInCourse } from '../api/courseApi'
+import {
+  fetchReviewsByCourse,
+  fetchMyReview,
+  createReview,
+  updateReview,
+  deleteReview,
+} from '@/domains/review/api/reviewApi'
+import CourseDetailSkeleton from '../components/CourseDetailSkeleton'
+import ReviewSection from '../components/ReviewSection/ReviewSection'
+import type { Review, CheckMyReviewResponse, EnrollmentCheckResponse } from '@/types/server'
 import { Badge } from '@/shared/components/ui/badge'
 import { getBadgeColor } from '@/utils/badgeColors'
-import CourseDetailSkeleton from '../components/CourseDetailSkeleton'
-import type { EnrollmentCheckResponse } from '@/types/server'
 import EnrollButton from '../components/EnrollmentButton'
 
 function CourseDetailPage() {
   const queryClient = useQueryClient()
   const { courseId } = useParams<{ courseId: string }>()
   const [tab, setTab] = useState<'intro' | 'review'>('intro')
+
+  // 강좌 정보
   const {
     data: course,
     isLoading: isCourseLoading,
@@ -22,12 +32,28 @@ function CourseDetailPage() {
     enabled: !!courseId,
   })
 
+  // 수강신청 여부
   const { data: isEnrolled, isLoading: isEnrollmentLoading } = useQuery<EnrollmentCheckResponse>({
     queryKey: ['checkEnrollment', courseId],
     queryFn: () => checkEnrollment(parseInt(courseId!)),
     enabled: !!courseId,
   })
 
+  // 코스별 리뷰 목록
+  const { data: reviews = [], refetch: refetchReviews } = useQuery<Review[]>({
+    queryKey: ['reviewsByCourse', courseId],
+    queryFn: () => fetchReviewsByCourse(parseInt(courseId!)),
+    enabled: !!courseId,
+  })
+
+  // 내가 작성한 리뷰 확인
+  const { data: myReviewData, refetch: refetchMyReview } = useQuery<CheckMyReviewResponse>({
+    queryKey: ['myReview', courseId],
+    queryFn: () => fetchMyReview(parseInt(courseId!)),
+    enabled: !!courseId,
+  })
+
+  // 수강신청
   const enrollMutation = useMutation({
     mutationFn: (courseId: number) => enrollInCourse(courseId),
     onSuccess: () => {
@@ -36,6 +62,49 @@ function CourseDetailPage() {
     },
     onError: () => {
       alert('수강 신청에 실패했습니다.')
+    },
+  })
+  // 리뷰 등록
+  const reviewMutation = useMutation({
+    mutationFn: (data: { rating: number; comment?: string }) =>
+      createReview({
+        courseId: parseInt(courseId!),
+        rating: data.rating,
+        comment: data.comment,
+      }),
+    onSuccess: () => {
+      alert('리뷰가 등록되었습니다!')
+      refetchReviews()
+      refetchMyReview()
+    },
+    onError: () => {
+      alert('리뷰 등록에 실패했습니다.')
+    },
+  })
+
+  // 리뷰 수정
+  const updateMutation = useMutation({
+    mutationFn: (data: { id: number; rating: number; comment: string }) =>
+      updateReview(data.id, { rating: data.rating, comment: data.comment }),
+    onSuccess: () => {
+      refetchReviews()
+      refetchMyReview()
+    },
+    onError: () => {
+      alert('리뷰 수정에 실패했습니다.')
+    },
+  })
+
+  // 리뷰 삭제
+  const deleteMutation = useMutation({
+    mutationFn: (id: number) => deleteReview(id),
+    onSuccess: () => {
+      alert('리뷰가 삭제되었습니다!')
+      refetchReviews()
+      refetchMyReview()
+    },
+    onError: () => {
+      alert('리뷰 삭제에 실패했습니다.')
     },
   })
 
@@ -111,8 +180,17 @@ function CourseDetailPage() {
         </div>
       ) : (
         <div>
-          {/* 강좌 후기 탭 내용: 추후 구현 */}
-          <div className="text-sub dark:text-sub text-center py-8">아직 후기가 없습니다.</div>
+          <ReviewSection
+            isEnrolled={isEnrolled ?? { enrolled: false }}
+            myReview={myReviewData?.review}
+            reviews={reviews}
+            onSubmit={(rating, comment) => reviewMutation.mutate({ rating, comment })}
+            submitting={reviewMutation.isPending}
+            onUpdate={(id, rating, comment) => updateMutation.mutate({ id, rating, comment })}
+            updating={updateMutation.isPending}
+            onDelete={id => deleteMutation.mutate(id)}
+            deleting={deleteMutation.isPending}
+          />
         </div>
       )}
     </div>
