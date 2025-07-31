@@ -29,8 +29,27 @@ export class UserService {
     })
   }
 
-  async remove(id: number): Promise<void> {
-    // Soft delete - isActive를 false로 변경
-    await this.userRepository.update(id, { isActive: false })
+  async removeMe(id: number) {
+    // User와 관련된 모든 데이터 삭제
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: ['enrollments', 'reviews', 'courseViews', 'searchHistory'],
+    })
+    if (!user) return
+
+    // 관련 데이터 삭제
+    await Promise.all([
+      ...user.enrollments.map(e => this.userRepository.manager.delete('Enrollment', e.id)),
+      ...user.reviews.map(r => this.userRepository.manager.delete('Review', r.id)),
+      ...user.courseViews.map(cv => this.userRepository.manager.delete('CourseView', cv.id)),
+      ...user.searchHistory.map(sh => this.userRepository.manager.delete('SearchHistory', sh.id)),
+    ])
+
+    // 마지막으로 유저 삭제
+    await this.userRepository.delete(id)
+
+    return {
+      success: true,
+    }
   }
 }

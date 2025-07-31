@@ -20,4 +20,11 @@ export class EnrollmentController {
     const userId = (req.user as { sub: number }).sub
     return await this.enrollmentService.enroll(userId, courseId)
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('my')
+  async getMyEnrollments(@Req() req: Request) {
+    const userId = (req.user as { sub: number }).sub
+    return await this.enrollmentService.getMyEnrollments(userId)
+  }
 }

@@ -7,6 +7,7 @@ import { RegisterPage } from './domains/auth/pages/RegisterPage'
 import { AuthProvider } from './domains/auth/contexts/AuthProvider'
 import CourseDetailPage from './domains/course/pages/CourseDetailPage'
 import ProtectedRoute from './shared/components/ProtectedRoute'
+import MyPage from './domains/user/pages/MyPage'
 
 const queryClient = new QueryClient()
 
@@ -28,7 +29,16 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+              <Route
+                path="my"
+                element={
+                  <ProtectedRoute>
+                    <MyPage />
+                  </ProtectedRoute>
+                }
+              />
             </Route>
+            <Route path="*" element={<div>404 Not Found</div>} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>

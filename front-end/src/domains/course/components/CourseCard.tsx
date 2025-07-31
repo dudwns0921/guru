@@ -12,9 +12,10 @@ import type { Course } from '@/types/server'
 
 interface CourseCardProps {
   course: Course
+  noPrice?: boolean
 }
 
-function CourseCard({ course }: CourseCardProps) {
+function CourseCard({ course, noPrice }: CourseCardProps) {
   return (
     <Link to={`/course/${course.id}`} className="block">
       <Card className="overflow-hidden border border-border text-main transition-colors transition-shadow hover:shadow-hover">
@@ -44,9 +45,11 @@ function CourseCard({ course }: CourseCardProps) {
             ))}
           </div>
 
-          <div className="text-2xl font-bold text-primary text-main">
-            ₩{Number(course.price).toLocaleString()}
-          </div>
+          {!noPrice && (
+            <div className="text-2xl font-bold text-primary text-main">
+              ₩{Number(course.price).toLocaleString()}
+            </div>
+          )}
         </CardContent>
       </Card>
     </Link>

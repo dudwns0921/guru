@@ -23,4 +23,11 @@ export class EnrollmentService {
     })
     return { enrolled: !!enrollment }
   }
+
+  async getMyEnrollments(userId: number) {
+    return await this.enrollmentRepository.find({
+      where: { user: { id: userId } },
+      relations: ['course'],
+    })
+  }
 }

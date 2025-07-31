@@ -40,10 +40,13 @@ function Header() {
               <>
                 <span className="text-sm font-medium text-main">안녕하세요, {user?.name}님!</span>
 
-                <button className="flex items-center space-x-1 px-3 py-2 text-sm font-medium text-main hover:text-brand-600 transition-colors">
+                <Link
+                  to="/my"
+                  className="flex items-center space-x-1 px-3 py-2 text-sm font-medium text-main hover:text-brand-600 transition-colors"
+                >
                   <User className="w-4 h-4" />
                   <span>내 정보</span>
-                </button>
+                </Link>
 
                 <button
                   className="flex items-center space-x-1 px-3 py-2 text-sm font-medium text-main hover:text-brand-600 transition-colors"

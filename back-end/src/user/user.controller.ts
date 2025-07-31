@@ -1,6 +1,7 @@
-import { Controller, Get, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common'
+import { Controller, Get, Param, Delete, UseGuards, Req } from '@nestjs/common'
 import { UserService } from './user.service'
 import { User } from './user.entity'
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
 @Controller('users')
 export class UserController {
@@ -21,9 +22,10 @@ export class UserController {
     return await this.userService.findByEmail(email)
   }
 
-  @Delete(':id')
-  @HttpCode(HttpStatus.NO_CONTENT)
-  async remove(@Param('id') id: string): Promise<void> {
-    return await this.userService.remove(+id)
+  @UseGuards(JwtAuthGuard)
+  @Delete('me')
+  async removeMe(@Req() req: import('express').Request) {
+    const userId = (req.user as { sub: number }).sub
+    return await this.userService.removeMe(userId)
   }
 }

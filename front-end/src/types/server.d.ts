@@ -1,16 +1,3 @@
-export type ServerResponseMap = {
-  'GET /courses': Course[]
-  'POST /auth/login': LoginResponse
-  'POST /auth/register': User
-  'GET /courses/:id': CourseDetail
-  'GET /enrollment/check/:courseId': EnrollmentCheckResponse
-  'GET /reviews/by-course': GetReviewsByCourseResponse
-  'GET /reviews/my': CheckMyReviewResponse
-  'POST /reviews/create': Review
-  'PUT /reviews/:id': UpdateReviewResponse
-  'DELETE /reviews/:id': DeleteReviewResponse
-}
-
 export interface Course {
   id: number
   title: string
@@ -101,3 +88,14 @@ export interface CheckMyReviewResponse {
 export type UpdateReviewResponse = Review
 
 export type DeleteReviewResponse = { success: boolean }
+
+export interface Enrollment {
+  id: number
+  enrolledAt: Date
+  user: User
+  course: Course
+}
+
+export interface DeleteUserResponse {
+  success: boolean
+}
