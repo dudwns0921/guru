@@ -56,13 +56,13 @@ api.interceptors.response.use(
         } catch (refreshError) {
           // 리프레시도 실패 → 로그아웃 처리
           clearTokens()
-          window.location.href = '/login'
+          window.location.href = '/guru/auth/login'
           return Promise.reject(refreshError)
         }
       } else {
         // 리프레시 토큰이 없거나 만료됨 → 로그아웃
         clearTokens()
-        window.location.href = '/login'
+        window.location.href = '/guru/auth/login'
       }
     }
 
