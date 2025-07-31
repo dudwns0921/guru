@@ -8,7 +8,7 @@ import {
 } from '@/shared/components/ui/card'
 import { Badge } from '@/shared/components/ui/badge'
 import { getBadgeColor } from '@/utils/badgeColors'
-import type { Course } from '@/types/server'
+import type { Course } from '@/domains/course/types/course'
 
 interface CourseCardProps {
   course: Course

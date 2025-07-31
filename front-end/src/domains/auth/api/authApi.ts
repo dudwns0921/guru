@@ -1,5 +1,5 @@
 import api from '@/lib/api'
-import type { User, CreateUserDto, LoginUserDto, LoginResponse } from '@/types/server'
+import type { User, CreateUserDto, LoginUserDto, LoginResponse } from '@/domains/user/types/user'
 
 // 회원가입
 export const registerUser = async (userData: CreateUserDto): Promise<User> => {

@@ -1,4 +1,4 @@
-import type { User } from '@/types/server'
+import type { User } from '@/domains/user/types/user'
 import { createContext } from 'react'
 
 interface AuthContextType {

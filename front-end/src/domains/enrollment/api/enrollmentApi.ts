@@ -1,5 +1,5 @@
 import api from '@/lib/api'
-import type { Enrollment } from '@/types/server'
+import type { Enrollment } from '../types/enrollment'
 
 export const getMyEnrollments = async () => {
   const response = await api.get<Enrollment[]>('enrollment/my')

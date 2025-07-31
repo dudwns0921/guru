@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
 import { getAccessToken, hasValidAccessToken, clearTokens, decodeToken } from '@/utils/tokens'
-import type { User } from '@/types/server'
+import type { User } from '@/domains/user/types/user'
 import { AuthContext } from './AuthContext'
 
 interface AuthProviderProps {

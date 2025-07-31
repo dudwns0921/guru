@@ -2,7 +2,7 @@ import { Badge } from '@/shared/components/ui/badge'
 import { Button } from '@/shared/components/ui/button'
 import { Textarea } from '@/shared/components/ui/textarea'
 import { Star } from 'lucide-react'
-import type { Review } from '@/types/server'
+import type { Review } from '@/domains/review/types/review'
 import ReviewStars from './RenderStars'
 import { useState } from 'react'
 

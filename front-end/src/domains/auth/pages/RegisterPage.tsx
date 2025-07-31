@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { RegisterForm } from '../components/RegisterForm'
 import { Card, CardContent } from '@/shared/components/ui/card'
-import type { User } from '@/types/server'
+import type { User } from '@/domains/user/types/user'
 
 export function RegisterPage() {
   const navigate = useNavigate()

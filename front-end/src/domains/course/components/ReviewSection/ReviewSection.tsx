@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import ReviewForm from './ReviewForm'
-import type { Review } from '@/types/server'
+import type { Review } from '@/domains/review/types/review'
 import MyReviewCard from './MyReviewCard'
 import ReviewList from './ReviewList'
 

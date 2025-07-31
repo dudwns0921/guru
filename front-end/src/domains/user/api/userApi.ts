@@ -1,5 +1,5 @@
 import api from '@/lib/api'
-import type { DeleteUserResponse } from '@/types/server'
+import type { DeleteUserResponse } from '@/domains/user/types/user'
 
 export const deleteMe = async () => {
   const response = await api.delete<DeleteUserResponse>('users/me')

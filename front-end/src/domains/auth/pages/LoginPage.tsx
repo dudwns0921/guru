@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { LoginForm } from '../components/LoginForm'
 import { Card, CardContent } from '@/shared/components/ui/card'
-import type { User } from '@/types/server'
+import type { User } from '@/domains/user/types/user'
 import { useAuth } from '../hooks/useAuth'
 
 export function LoginPage() {

@@ -1,6 +1,6 @@
 import { Badge } from '@/shared/components/ui/badge'
 import { Star } from 'lucide-react'
-import type { Review } from '@/types/server'
+import type { Review } from '@/domains/review/types/review'
 
 interface ReviewListProps {
   reviews: Review[]

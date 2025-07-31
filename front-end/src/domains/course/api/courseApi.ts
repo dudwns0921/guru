@@ -1,5 +1,6 @@
 import api from '@/lib/api'
-import type { Course, CourseDetail, EnrollmentCheckResponse } from '@/types/server'
+import type { Course, CourseDetail } from '@/domains/course/types/course'
+import type { EnrollmentCheckResponse } from '@/domains/enrollment/types/enrollment'
 
 // 모든 코스 가져오기
 export const fetchCourses = async (): Promise<Course[]> => {

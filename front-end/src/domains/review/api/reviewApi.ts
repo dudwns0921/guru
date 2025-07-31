@@ -5,7 +5,7 @@ import type {
   GetReviewsByCourseResponse,
   CheckMyReviewResponse,
   UpdateReviewDto,
-} from '@/types/server'
+} from '@/domains/review/types/review'
 
 // 코스별 리뷰 목록 가져오기
 export const fetchReviewsByCourse = async (

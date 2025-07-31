@@ -3,7 +3,7 @@ import { Button } from '@/shared/components/ui/button'
 import { useQuery, useMutation } from '@tanstack/react-query'
 import { getMyEnrollments } from '@/domains/enrollment/api/enrollmentApi'
 import { useAuth } from '@/domains/auth/hooks/useAuth'
-import type { Enrollment } from '@/types/server'
+import type { Enrollment } from '@/domains/enrollment/types/enrollment'
 import { deleteMe } from '../api/userApi'
 
 function MyPage() {

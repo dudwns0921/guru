@@ -4,7 +4,7 @@ import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
 import { Label } from '@/shared/components/ui/label'
 import { loginUser } from '../api/authApi'
-import type { User, LoginUserDto } from '@/types/server'
+import type { User, LoginUserDto } from '@/domains/user/types/user'
 import { setTokens } from '@/utils/tokens'
 
 interface LoginFormProps {

@@ -4,7 +4,7 @@ import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
 import { Label } from '@/shared/components/ui/label'
 import { registerUser } from '../api/authApi'
-import type { User, CreateUserDto } from '@/types/server'
+import type { User, CreateUserDto } from '@/domains/user/types/user'
 
 interface RegisterFormProps {
   onSuccess?: (user: User) => void
