@@ -10,10 +10,10 @@ interface ReviewSectionProps {
   reviews: Review[]
   onSubmit: (rating: number, comment: string) => void
   submitting: boolean
-  onUpdate?: (id: number, rating: number, comment: string) => void
-  onDelete?: (id: number) => void
-  updating?: boolean
-  deleting?: boolean
+  onUpdate: (id: number, rating: number, comment: string) => void
+  onDelete: (id: number) => void
+  updating: boolean
+  deleting: boolean
 }
 
 function ReviewSection({
