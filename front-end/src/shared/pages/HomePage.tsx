@@ -6,24 +6,37 @@ function HomePage() {
   const { isAuthenticated } = useAuth()
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-8">
       <div className="flex flex-col gap-16">
         {/* Hero Section */}
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-main mb-4">개인화된 학습 경험을 시작하세요</h1>
-          <p className="text-xl text-sub mb-8 max-w-2xl mx-auto">
+        <div className="text-center px-2 py-4 sm:px-8">
+          <h1
+            className="text-4xl font-bold text-main mb-4 break-words"
+            style={{ wordBreak: 'keep-all' }}
+          >
+            개인화된 학습 경험을 시작하세요
+          </h1>
+          <p
+            className="text-xl text-sub mb-8 max-w-2xl mx-auto break-words"
+            style={{ wordBreak: 'keep-all' }}
+          >
             AI 기반 추천 시스템으로 당신에게 완벽한 강의를 찾아드립니다
           </p>
         </div>
 
         {/* Recommended Courses Section */}
-        <div>
-          <h2 className="text-3xl font-bold text-center text-main mb-8">추천 강의</h2>
+        <div className="px-2 sm:px-8">
+          <h2
+            className="text-3xl font-bold text-center text-main mb-8 break-words"
+            style={{ wordBreak: 'keep-all' }}
+          >
+            추천 강의
+          </h2>
 
           {isAuthenticated ? (
             // 로그인된 상태
-            <div className="text-center py-8 bg-brand-50 dark:bg-brand-100 rounded-lg">
-              <p className="text-lg text-sub mb-4">
+            <div className="text-center py-8 bg-brand-50 dark:bg-brand-100 rounded-lg px-2 sm:px-8">
+              <p className="text-lg text-sub mb-4 break-words" style={{ wordBreak: 'keep-all' }}>
                 개인화된 학습 경험을 시작하고 싶다면 첫 수업을 시작해보세요!
               </p>
               <button className="inline-block bg-brand-600 hover:bg-brand-700 text-white px-6 py-3 rounded-lg text-lg font-medium transition-colors">
@@ -32,8 +45,10 @@ function HomePage() {
             </div>
           ) : (
             // 로그인되지 않은 상태
-            <div className="text-center py-8 bg-brand-50 dark:bg-brand-100 rounded-lg">
-              <p className="text-lg text-sub mb-4">개인화된 강의를 듣고 싶다면 로그인을 해주세요</p>
+            <div className="text-center py-8 bg-brand-50 dark:bg-brand-100 rounded-lg px-2 sm:px-8">
+              <p className="text-lg text-sub mb-4 break-words" style={{ wordBreak: 'keep-all' }}>
+                개인화된 강의를 듣고 싶다면 로그인을 해주세요
+              </p>
               <Link
                 to="/auth/login"
                 className="inline-block bg-brand-600 hover:bg-brand-700 text-white px-6 py-3 rounded-lg text-lg font-medium transition-colors"
@@ -45,8 +60,13 @@ function HomePage() {
         </div>
 
         {/* All Courses Section */}
-        <div>
-          <h2 className="text-3xl font-bold text-center text-main mb-8">전체 강의</h2>
+        <div className="px-2 sm:px-8">
+          <h2
+            className="text-3xl font-bold text-center text-main mb-8 break-words"
+            style={{ wordBreak: 'keep-all' }}
+          >
+            전체 강의
+          </h2>
           <CourseList />
         </div>
       </div>

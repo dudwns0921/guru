@@ -1,18 +1,22 @@
-import { Link, useNavigate } from 'react-router-dom'
-import { Sun, Moon, LogOut, User } from 'lucide-react'
-import { useDarkMode } from '../hooks/useDarkMode'
-import { useAuth } from '@/domains/auth/hooks/useAuth'
+import type { User as UserType } from '@/domains/user/types/user'
+import { LogOut, Moon, Sun, User } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
-function Header() {
-  const { isDarkMode, toggleDarkMode } = useDarkMode()
-  const { user, isAuthenticated, logout } = useAuth()
-  const navigate = useNavigate()
+interface DesktopHeaderProps {
+  onLogout: () => void
+  onToggleDark: () => void
+  isDarkMode: boolean
+  user: UserType | null
+  isAuthenticated: boolean
+}
 
-  const handleLogout = () => {
-    logout()
-    navigate('/auth/login')
-  }
-
+function DesktopHeader({
+  onLogout,
+  onToggleDark,
+  isDarkMode,
+  user,
+  isAuthenticated,
+}: DesktopHeaderProps) {
   return (
     <header className="shadow-sm border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,23 +27,18 @@ function Header() {
               Guru.
             </Link>
           </div>
-
           {/* User Actions */}
           <div className="flex items-center space-x-4">
-            {/* Dark Mode Toggle */}
             <button
-              onClick={toggleDarkMode}
+              onClick={onToggleDark}
               className="p-2 rounded-md text-main transition-colors hover:bg-muted"
               aria-label="다크 모드 토글"
             >
               {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
-
             {isAuthenticated ? (
-              // 로그인된 상태
               <>
                 <span className="text-sm font-medium text-main">안녕하세요, {user?.name}님!</span>
-
                 <Link
                   to="/my"
                   className="flex items-center space-x-1 px-3 py-2 text-sm font-medium text-main hover:text-brand-600 transition-colors"
@@ -47,17 +46,15 @@ function Header() {
                   <User className="w-4 h-4" />
                   <span>내 정보</span>
                 </Link>
-
                 <button
                   className="flex items-center space-x-1 px-3 py-2 text-sm font-medium text-main hover:text-brand-600 transition-colors"
-                  onClick={handleLogout}
+                  onClick={onLogout}
                 >
                   <LogOut className="w-4 h-4" />
                   <span>로그아웃</span>
                 </button>
               </>
             ) : (
-              // 로그인되지 않은 상태
               <>
                 <Link
                   to="/auth/login"
@@ -80,4 +77,4 @@ function Header() {
   )
 }
 
-export default Header
+export default DesktopHeader
