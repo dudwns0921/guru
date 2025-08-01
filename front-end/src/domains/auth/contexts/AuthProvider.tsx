@@ -10,6 +10,7 @@ interface AuthProviderProps {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
 
   // 앱 시작 시 토큰으로부터 사용자 정보 복구
   useEffect(() => {
@@ -40,6 +41,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
       } catch (error) {
         console.error('토큰 복구 실패:', error)
         clearTokens()
+      } finally {
+        setIsLoading(false)
       }
     }
 
@@ -60,6 +63,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     isAuthenticated: !!user,
     login,
     logout,
+    isLoading,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
