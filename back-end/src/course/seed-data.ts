@@ -1,85 +1,90 @@
 export const seedCourses = [
   {
-    title: 'React 완전 정복',
-    description: 'React의 기초부터 고급 패턴까지 완전히 마스터하는 실무 중심 강의입니다.',
+    id: 1,
+    title: 'JavaScript 기초 마스터',
+    description: '웹 개발의 기본이 되는 JavaScript 핵심 개념과 문법을 처음부터 배웁니다.',
+    instructor: '김자바스크립트',
+    price: 79000,
+    thumbnailUrl: 'https://picsum.photos/400/200?random=1',
+    tags: ['JavaScript', 'Frontend', 'Web', 'Programming', 'Basics', 'Beginner'],
+  },
+  {
+    id: 2,
+    title: 'JavaScript ES6+ 심화',
+    description:
+      'JavaScript 기초 마스터 과정 이후 학습하는 모던 자바스크립트 핵심 기능들을 다룹니다.',
+    instructor: '김자바스크립트',
+    price: 99000,
+    thumbnailUrl: 'https://picsum.photos/400/200?random=2',
+    tags: ['JavaScript', 'ES6+', 'Frontend', 'Web', 'Advanced', 'Intermediate'],
+  },
+  {
+    id: 3,
+    title: 'React 입문과 핵심',
+    description: 'JavaScript 기초 지식을 바탕으로 React의 기본 개념과 hooks를 이해합니다.',
     instructor: '김리액트',
     price: 99000,
-    thumbnailUrl: 'https://picsum.photos/400/200?random=1',
-    tags: ['React', 'JavaScript', 'Frontend', 'SPA', 'Hooks'],
+    thumbnailUrl: 'https://picsum.photos/400/200?random=3',
+    tags: ['React', 'JavaScript', 'Frontend', 'UI', 'Hooks', 'Beginner'],
   },
   {
-    title: 'Node.js 백엔드 개발',
-    description: 'Node.js, Express, MongoDB를 활용한 RESTful API 개발 완전 가이드',
+    id: 4,
+    title: 'React 고급 패턴과 성능 최적화',
+    description: 'React 입문 과정 다음 단계로, 고급 패턴과 성능 최적화 기법을 마스터합니다.',
+    instructor: '김리액트',
+    price: 129000,
+    thumbnailUrl: 'https://picsum.photos/400/200?random=4',
+    tags: ['React', 'JavaScript', 'Frontend', 'Performance', 'Advanced', 'Intermediate'],
+  },
+  {
+    id: 5,
+    title: 'React 프로젝트 실전',
+    description:
+      'React 고급 과정 이후 대규모 프로젝트에 적용할 수 있는 아키텍처와 상태 관리를 배웁니다.',
+    instructor: '김리액트',
+    price: 159000,
+    thumbnailUrl: 'https://picsum.photos/400/200?random=5',
+    tags: ['React', 'Redux', 'Architecture', 'Frontend', 'Project', 'Advanced'],
+  },
+  {
+    id: 6,
+    title: 'Node.js 백엔드 기초',
+    description: 'JavaScript 지식을 활용해 서버 사이드 개발을 시작하는 Node.js 입문 과정입니다.',
+    instructor: '이노드',
+    price: 89000,
+    thumbnailUrl: 'https://picsum.photos/400/200?random=6',
+    tags: ['Node.js', 'Backend', 'JavaScript', 'Server', 'Basics', 'Beginner'],
+  },
+  {
+    id: 7,
+    title: 'Express로 웹 서버 구축하기',
+    description: 'Node.js 기초 과정 다음으로 학습할 Express 프레임워크 활용법을 배웁니다.',
     instructor: '이노드',
     price: 120000,
-    thumbnailUrl: 'https://picsum.photos/400/200?random=2',
-    tags: ['Node.js', 'Express', 'Backend', 'API', 'JavaScript'],
-  },
-  {
-    title: 'TypeScript 마스터클래스',
-    description: 'JavaScript 개발자를 위한 TypeScript 완전 정복 과정',
-    instructor: '박타입',
-    price: 89000,
-    thumbnailUrl: 'https://picsum.photos/400/200?random=3',
-    tags: ['TypeScript', 'JavaScript', 'Type Safety', 'ES6+', 'Development'],
-  },
-  {
-    title: 'Python 데이터 분석',
-    description: 'Pandas, NumPy, Matplotlib을 활용한 실무 데이터 분석',
-    instructor: '최파이썬',
-    price: 150000,
-    thumbnailUrl: 'https://picsum.photos/400/200?random=4',
-    tags: ['Python', 'Data Analysis', 'Pandas', 'NumPy', 'Visualization'],
-  },
-  {
-    title: 'Vue.js 3 완벽 가이드',
-    description: 'Vue.js 3의 Composition API부터 실무 프로젝트까지',
-    instructor: '정뷰',
-    price: 110000,
-    thumbnailUrl: 'https://picsum.photos/400/200?random=5',
-    tags: ['Vue.js', 'Frontend', 'Composition API', 'SPA', 'JavaScript'],
-  },
-  {
-    title: 'AWS 클라우드 아키텍처',
-    description: 'AWS 서비스를 활용한 확장 가능한 클라우드 시스템 설계',
-    instructor: '이클라우드',
-    price: 200000,
-    thumbnailUrl: 'https://picsum.photos/400/200?random=6',
-    tags: ['AWS', 'Cloud', 'DevOps', 'Infrastructure', 'Serverless'],
-  },
-  {
-    title: 'Docker & Kubernetes',
-    description: '컨테이너 기반 개발부터 쿠버네티스 운영까지',
-    instructor: '장도커',
-    price: 180000,
     thumbnailUrl: 'https://picsum.photos/400/200?random=7',
-    tags: ['Docker', 'Kubernetes', 'DevOps', 'Container', 'Orchestration'],
+    tags: ['Node.js', 'Express', 'Backend', 'API', 'JavaScript', 'Intermediate'],
   },
   {
-    title: 'Next.js 풀스택 개발',
-    description: 'Next.js로 만드는 현대적인 풀스택 웹 애플리케이션',
-    instructor: '김넥스트',
+    id: 8,
+    title: 'RESTful API 마스터',
+    description: 'Express 과정 이후 배울 RESTful API 설계 원칙과 실전 구현 방법을 다룹니다.',
+    instructor: '이노드',
     price: 140000,
     thumbnailUrl: 'https://picsum.photos/400/200?random=8',
-    tags: ['Next.js', 'React', 'Fullstack', 'SSR', 'Vercel'],
+    tags: ['REST', 'API', 'Node.js', 'Express', 'Backend', 'Intermediate'],
   },
   {
-    title: 'MongoDB 데이터베이스',
-    description: 'NoSQL 데이터베이스 MongoDB 실무 활용법',
-    instructor: '이몽고',
-    price: 95000,
+    id: 9,
+    title: 'Node.js 마이크로서비스 아키텍처',
+    description:
+      'RESTful API 과정 이후 학습하는 확장 가능한 마이크로서비스 설계와 구현 방법입니다.',
+    instructor: '이노드',
+    price: 180000,
     thumbnailUrl: 'https://picsum.photos/400/200?random=9',
-    tags: ['MongoDB', 'NoSQL', 'Database', 'Backend', 'Aggregation'],
+    tags: ['Node.js', 'Microservices', 'Architecture', 'Backend', 'DevOps', 'Advanced'],
   },
   {
-    title: 'GraphQL API 개발',
-    description: 'GraphQL을 활용한 효율적인 API 설계와 구현',
-    instructor: '박그래프',
-    price: 125000,
-    thumbnailUrl: 'https://picsum.photos/400/200?random=10',
-    tags: ['GraphQL', 'API', 'Backend', 'Apollo', 'Query Language'],
-  },
-  {
+    id: 10,
     title: 'React Native 모바일 앱',
     description: 'React Native로 iOS/Android 앱 동시 개발하기',
     instructor: '최모바일',
@@ -88,6 +93,7 @@ export const seedCourses = [
     tags: ['React Native', 'Mobile', 'iOS', 'Android', 'Cross Platform'],
   },
   {
+    id: 11,
     title: 'Spring Boot 마스터',
     description: 'Java Spring Boot를 활용한 엔터프라이즈 애플리케이션 개발',
     instructor: '정스프링',
@@ -96,6 +102,7 @@ export const seedCourses = [
     tags: ['Spring Boot', 'Java', 'Backend', 'Enterprise', 'JPA'],
   },
   {
+    id: 12,
     title: 'Flutter 앱 개발',
     description: 'Dart와 Flutter로 크로스플랫폼 모바일 앱 만들기',
     instructor: '김플러터',
@@ -104,6 +111,7 @@ export const seedCourses = [
     tags: ['Flutter', 'Dart', 'Mobile', 'Cross Platform', 'Google'],
   },
   {
+    id: 13,
     title: 'Redis 캐싱 전략',
     description: '고성능 웹 애플리케이션을 위한 Redis 활용법',
     instructor: '이레디스',
@@ -112,6 +120,7 @@ export const seedCourses = [
     tags: ['Redis', 'Caching', 'Performance', 'Database', 'Memory'],
   },
   {
+    id: 14,
     title: 'Elasticsearch 검색엔진',
     description: '대용량 데이터 검색과 분석을 위한 Elasticsearch 마스터',
     instructor: '박검색',
@@ -120,6 +129,7 @@ export const seedCourses = [
     tags: ['Elasticsearch', 'Search', 'Analytics', 'Big Data', 'Kibana'],
   },
   {
+    id: 15,
     title: 'Svelte 프론트엔드',
     description: '가장 빠른 프론트엔드 프레임워크 Svelte 완전 정복',
     instructor: '최스벨트',
@@ -128,6 +138,7 @@ export const seedCourses = [
     tags: ['Svelte', 'Frontend', 'Performance', 'Compiler', 'JavaScript'],
   },
   {
+    id: 16,
     title: 'PostgreSQL 데이터베이스',
     description: '관계형 데이터베이스 PostgreSQL의 고급 기능 활용',
     instructor: '장포스트',
@@ -136,6 +147,7 @@ export const seedCourses = [
     tags: ['PostgreSQL', 'SQL', 'Database', 'Relational', 'ACID'],
   },
   {
+    id: 17,
     title: 'Nginx 웹서버',
     description: '고성능 웹서버 Nginx 설정과 최적화 가이드',
     instructor: '김엔진엑스',
@@ -144,6 +156,7 @@ export const seedCourses = [
     tags: ['Nginx', 'Web Server', 'Load Balancer', 'Reverse Proxy', 'Performance'],
   },
   {
+    id: 18,
     title: 'Jenkins CI/CD',
     description: '자동화된 배포 파이프라인 구축과 DevOps 실무',
     instructor: '이젠킨스',
@@ -152,6 +165,7 @@ export const seedCourses = [
     tags: ['Jenkins', 'CI/CD', 'DevOps', 'Automation', 'Pipeline'],
   },
   {
+    id: 19,
     title: 'Golang 백엔드 개발',
     description: 'Go 언어로 만드는 고성능 마이크로서비스',
     instructor: '박고랭',
@@ -160,6 +174,7 @@ export const seedCourses = [
     tags: ['Go', 'Golang', 'Backend', 'Microservices', 'Concurrency'],
   },
   {
+    id: 20,
     title: 'Rust 시스템 프로그래밍',
     description: '메모리 안전성과 성능을 보장하는 Rust 언어 마스터',
     instructor: '최러스트',
@@ -168,6 +183,7 @@ export const seedCourses = [
     tags: ['Rust', 'System Programming', 'Memory Safety', 'Performance', 'Concurrency'],
   },
   {
+    id: 21,
     title: 'Tailwind CSS 디자인',
     description: '유틸리티 퍼스트 CSS 프레임워크로 빠른 UI 개발',
     instructor: '정테일윈드',
@@ -176,6 +192,7 @@ export const seedCourses = [
     tags: ['Tailwind CSS', 'CSS', 'Frontend', 'UI', 'Utility First'],
   },
   {
+    id: 22,
     title: 'WebAssembly 고성능 웹',
     description: '네이티브 성능의 웹 애플리케이션 개발하기',
     instructor: '김웹어셈',
@@ -184,6 +201,7 @@ export const seedCourses = [
     tags: ['WebAssembly', 'WASM', 'Performance', 'C++', 'Rust'],
   },
   {
+    id: 23,
     title: 'Three.js 3D 웹',
     description: '웹에서 구현하는 인터랙티브 3D 그래픽스',
     instructor: '이쓰리',
@@ -192,6 +210,7 @@ export const seedCourses = [
     tags: ['Three.js', '3D', 'WebGL', 'Graphics', 'Animation'],
   },
   {
+    id: 24,
     title: 'D3.js 데이터 시각화',
     description: '데이터를 아름다운 인터랙티브 차트로 변환하기',
     instructor: '박데이터',
@@ -200,6 +219,7 @@ export const seedCourses = [
     tags: ['D3.js', 'Data Visualization', 'SVG', 'Charts', 'Interactive'],
   },
   {
+    id: 25,
     title: 'Socket.io 실시간 통신',
     description: '실시간 채팅과 알림 시스템 구축하기',
     instructor: '최소켓',
@@ -208,6 +228,7 @@ export const seedCourses = [
     tags: ['Socket.io', 'Real-time', 'WebSocket', 'Chat', 'Node.js'],
   },
   {
+    id: 26,
     title: 'Prisma ORM',
     description: '타입 안전한 데이터베이스 액세스를 위한 Prisma 활용법',
     instructor: '장프리즈마',
@@ -216,6 +237,7 @@ export const seedCourses = [
     tags: ['Prisma', 'ORM', 'Database', 'TypeScript', 'Type Safety'],
   },
   {
+    id: 27,
     title: 'Stripe 결제 시스템',
     description: '안전하고 신뢰할 수 있는 온라인 결제 시스템 구축',
     instructor: '김결제',
@@ -224,6 +246,7 @@ export const seedCourses = [
     tags: ['Stripe', 'Payment', 'E-commerce', 'API', 'Security'],
   },
   {
+    id: 28,
     title: 'Firebase 백엔드',
     description: 'Google Firebase로 서버리스 백엔드 구축하기',
     instructor: '이파이어베이스',
@@ -232,6 +255,7 @@ export const seedCourses = [
     tags: ['Firebase', 'Serverless', 'Backend', 'Google', 'NoSQL'],
   },
   {
+    id: 29,
     title: 'Supabase 개발',
     description: '오픈소스 Firebase 대안 Supabase 완전 활용',
     instructor: '박수파베이스',
@@ -240,6 +264,7 @@ export const seedCourses = [
     tags: ['Supabase', 'Backend', 'PostgreSQL', 'Real-time', 'Open Source'],
   },
   {
+    id: 30,
     title: 'TensorFlow.js 머신러닝',
     description: '웹에서 구현하는 머신러닝과 AI 모델',
     instructor: '최텐서플로우',
@@ -248,6 +273,7 @@ export const seedCourses = [
     tags: ['TensorFlow.js', 'Machine Learning', 'AI', 'Neural Networks', 'JavaScript'],
   },
   {
+    id: 31,
     title: 'Electron 데스크톱 앱',
     description: '웹 기술로 만드는 크로스플랫폼 데스크톱 애플리케이션',
     instructor: '정일렉트론',
@@ -256,6 +282,7 @@ export const seedCourses = [
     tags: ['Electron', 'Desktop', 'Cross Platform', 'Node.js', 'Chromium'],
   },
   {
+    id: 32,
     title: 'Deno 런타임',
     description: '차세대 JavaScript/TypeScript 런타임 Deno 마스터',
     instructor: '김데노',
@@ -264,6 +291,7 @@ export const seedCourses = [
     tags: ['Deno', 'JavaScript', 'TypeScript', 'Runtime', 'Security'],
   },
   {
+    id: 33,
     title: 'Bun 자바스크립트 런타임',
     description: '초고속 JavaScript 런타임 Bun 완전 활용법',
     instructor: '이번',
@@ -272,6 +300,7 @@ export const seedCourses = [
     tags: ['Bun', 'JavaScript', 'Runtime', 'Performance', 'Bundler'],
   },
   {
+    id: 34,
     title: 'Vite 빌드 도구',
     description: '빠른 개발과 빌드를 위한 차세대 프론트엔드 도구',
     instructor: '박비트',
@@ -280,6 +309,7 @@ export const seedCourses = [
     tags: ['Vite', 'Build Tool', 'Frontend', 'ES Modules', 'HMR'],
   },
   {
+    id: 35,
     title: 'Remix 풀스택 프레임워크',
     description: '웹 표준 기반의 현대적인 풀스택 React 프레임워크',
     instructor: '최리믹스',
@@ -288,6 +318,7 @@ export const seedCourses = [
     tags: ['Remix', 'React', 'Fullstack', 'Web Standards', 'SSR'],
   },
   {
+    id: 36,
     title: 'SolidJS 반응형 UI',
     description: '진정한 반응형을 구현하는 고성능 UI 라이브러리',
     instructor: '장솔리드',
@@ -296,6 +327,7 @@ export const seedCourses = [
     tags: ['SolidJS', 'Reactive', 'Frontend', 'Performance', 'Fine-grained'],
   },
   {
+    id: 37,
     title: 'Qwik 즉시 로딩',
     description: '즉시 로딩되는 웹 애플리케이션을 위한 Qwik 프레임워크',
     instructor: '김퀵',
@@ -304,6 +336,7 @@ export const seedCourses = [
     tags: ['Qwik', 'Resumability', 'Performance', 'SSR', 'Lazy Loading'],
   },
   {
+    id: 38,
     title: 'Astro 정적 사이트',
     description: '콘텐츠 중심의 초고속 정적 사이트 생성기',
     instructor: '이아스트로',
@@ -312,6 +345,7 @@ export const seedCourses = [
     tags: ['Astro', 'Static Site', 'Performance', 'Content', 'Islands'],
   },
   {
+    id: 39,
     title: 'Nuxt.js Vue 프레임워크',
     description: 'Vue.js 기반의 프로덕션 레디 웹 프레임워크',
     instructor: '박넉스트',
@@ -320,6 +354,7 @@ export const seedCourses = [
     tags: ['Nuxt.js', 'Vue.js', 'SSR', 'Static Site', 'Universal'],
   },
   {
+    id: 40,
     title: 'SvelteKit 풀스택',
     description: 'Svelte 기반의 풀스택 웹 애플리케이션 프레임워크',
     instructor: '최스벨트킷',
@@ -328,6 +363,7 @@ export const seedCourses = [
     tags: ['SvelteKit', 'Svelte', 'Fullstack', 'SSR', 'Performance'],
   },
   {
+    id: 41,
     title: 'Turbo 모노리포',
     description: '고성능 JavaScript/TypeScript 모노리포 도구',
     instructor: '정터보',
@@ -336,6 +372,7 @@ export const seedCourses = [
     tags: ['Turbo', 'Monorepo', 'Build System', 'Caching', 'Performance'],
   },
   {
+    id: 42,
     title: 'pnpm 패키지 매니저',
     description: '빠르고 효율적인 JavaScript 패키지 매니저',
     instructor: '김패키지',
@@ -344,6 +381,7 @@ export const seedCourses = [
     tags: ['pnpm', 'Package Manager', 'Node.js', 'Performance', 'Disk Space'],
   },
   {
+    id: 43,
     title: 'esbuild 초고속 빌드',
     description: 'Go로 작성된 초고속 JavaScript 번들러',
     instructor: '이빌드',
@@ -352,6 +390,7 @@ export const seedCourses = [
     tags: ['esbuild', 'Bundler', 'Go', 'Performance', 'JavaScript'],
   },
   {
+    id: 44,
     title: 'SWC 컴파일러',
     description: 'Rust 기반의 초고속 JavaScript/TypeScript 컴파일러',
     instructor: '박컴파일',
@@ -360,6 +399,7 @@ export const seedCourses = [
     tags: ['SWC', 'Compiler', 'Rust', 'JavaScript', 'TypeScript'],
   },
   {
+    id: 45,
     title: 'Playwright 테스팅',
     description: '현대적인 웹 애플리케이션을 위한 end-to-end 테스팅',
     instructor: '최테스트',
@@ -368,6 +408,7 @@ export const seedCourses = [
     tags: ['Playwright', 'E2E Testing', 'Automation', 'Cross Browser', 'Microsoft'],
   },
   {
+    id: 46,
     title: 'Cypress E2E 테스트',
     description: '개발자 친화적인 end-to-end 테스팅 프레임워크',
     instructor: '장사이프레스',
@@ -376,6 +417,7 @@ export const seedCourses = [
     tags: ['Cypress', 'E2E Testing', 'JavaScript', 'Automation', 'Developer Tools'],
   },
   {
+    id: 47,
     title: 'Jest 단위 테스트',
     description: 'JavaScript 애플리케이션을 위한 포괄적인 테스팅 프레임워크',
     instructor: '김제스트',
@@ -384,6 +426,7 @@ export const seedCourses = [
     tags: ['Jest', 'Unit Testing', 'JavaScript', 'Mocking', 'Snapshot'],
   },
   {
+    id: 48,
     title: 'MSW Mock Service',
     description: 'Service Worker를 활용한 API 모킹 라이브러리',
     instructor: '이목킹',
@@ -392,6 +435,7 @@ export const seedCourses = [
     tags: ['MSW', 'API Mocking', 'Service Worker', 'Testing', 'REST'],
   },
   {
+    id: 49,
     title: 'Storybook 컴포넌트',
     description: 'UI 컴포넌트 개발과 테스팅을 위한 도구',
     instructor: '박스토리북',

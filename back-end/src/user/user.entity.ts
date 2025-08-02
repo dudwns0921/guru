@@ -1,7 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, OneToMany } from 'typeorm'
 import { Enrollment } from '../enrollment/enrollment.entity'
 import { Review } from '../review/review.entity'
-import { CourseView } from '../course-view/course-view.entity'
 import { SearchHistory } from '../search-history/search-history.entity'
 import { Exclude } from 'class-transformer'
 
@@ -33,9 +32,6 @@ export class User {
 
   @OneToMany(() => Review, review => review.user)
   reviews: Review[]
-
-  @OneToMany(() => CourseView, courseView => courseView.user)
-  courseViews: CourseView[]
 
   @OneToMany(() => SearchHistory, searchHistory => searchHistory.user)
   searchHistory: SearchHistory[]

@@ -1,7 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany } from 'typeorm'
 import { Enrollment } from '../enrollment/enrollment.entity'
 import { Review } from '../review/review.entity'
-import { CourseView } from '../course-view/course-view.entity'
 
 @Entity()
 export class Course {
@@ -44,7 +43,4 @@ export class Course {
 
   @OneToMany(() => Review, review => review.course)
   reviews: Review[]
-
-  @OneToMany(() => CourseView, courseView => courseView.course)
-  courseViews: CourseView[]
 }

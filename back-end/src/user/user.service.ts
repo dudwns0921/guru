@@ -22,7 +22,6 @@ export class UserService {
     await Promise.all([
       ...user.enrollments.map(e => this.userRepository.manager.delete('Enrollment', e.id)),
       ...user.reviews.map(r => this.userRepository.manager.delete('Review', r.id)),
-      ...user.courseViews.map(cv => this.userRepository.manager.delete('CourseView', cv.id)),
       ...user.searchHistory.map(sh => this.userRepository.manager.delete('SearchHistory', sh.id)),
     ])
 

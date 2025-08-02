@@ -9,6 +9,6 @@ import { CourseSeederService } from './course-seeder.service'
   imports: [TypeOrmModule.forFeature([Course])],
   controllers: [CourseController],
   providers: [CourseService, CourseSeederService],
-  exports: [CourseService, CourseSeederService],
+  exports: [CourseService, CourseSeederService, TypeOrmModule],
 })
 export class CourseModule {}

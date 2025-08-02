@@ -7,8 +7,8 @@ import { AuthModule } from './auth/auth.module'
 import { UserModule } from './user/user.module'
 import { EnrollmentModule } from './enrollment/enrollment.module'
 import { ReviewModule } from './review/review.module'
-import { CourseViewModule } from './course-view/course-view.module'
 import { SearchHistoryModule } from './search-history/search-history.module'
+import { SeederModule } from './seeder/seeder.module'
 
 @Module({
   imports: [
@@ -35,8 +35,8 @@ import { SearchHistoryModule } from './search-history/search-history.module'
     UserModule,
     EnrollmentModule,
     ReviewModule,
-    CourseViewModule,
     SearchHistoryModule,
+    SeederModule,
   ],
 })
 export class AppModule {}
