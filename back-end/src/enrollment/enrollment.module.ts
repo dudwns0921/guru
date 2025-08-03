@@ -6,7 +6,7 @@ import { EnrollmentService } from './enrollment.service'
 
 @Module({
   imports: [TypeOrmModule.forFeature([Enrollment])],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, EnrollmentService],
   controllers: [EnrollmentController],
   providers: [EnrollmentService],
 })

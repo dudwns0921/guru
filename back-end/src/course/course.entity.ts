@@ -25,15 +25,6 @@ export class Course {
   @Column('text', { array: true, default: [] })
   tags: string[]
 
-  @Column({ type: 'decimal', precision: 3, scale: 2, default: 0 })
-  averageRating: number // 평균 평점
-
-  @Column({ type: 'int', default: 0 })
-  totalEnrollments: number // 총 수강생 수
-
-  @Column({ type: 'int', default: 0 })
-  totalViews: number // 총 조회 수
-
   @CreateDateColumn()
   createdAt: Date
 
