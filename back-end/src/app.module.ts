@@ -9,6 +9,7 @@ import { EnrollmentModule } from './enrollment/enrollment.module'
 import { ReviewModule } from './review/review.module'
 import { SearchHistoryModule } from './search-history/search-history.module'
 import { SeederModule } from './seeder/seeder.module'
+import { AiModule } from './ai/ai.module'
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { SeederModule } from './seeder/seeder.module'
     ReviewModule,
     SearchHistoryModule,
     SeederModule,
+    AiModule,
   ],
 })
 export class AppModule {}

@@ -1,3 +1,3 @@
 export function getAIServerUrl(): string {
-  return 'http://ai:8000/ping'
+  return 'http://ai:8000/'
 }
