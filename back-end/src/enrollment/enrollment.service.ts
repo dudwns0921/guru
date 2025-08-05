@@ -30,4 +30,15 @@ export class EnrollmentService {
       relations: ['course'],
     })
   }
+
+  async cancelEnrollment(userId: number, enrollmentId: number) {
+    const enrollment = await this.enrollmentRepository.findOne({
+      where: { id: enrollmentId, user: { id: userId } },
+    })
+    if (!enrollment) {
+      throw new Error('Enrollment not found')
+    }
+    await this.enrollmentRepository.remove(enrollment)
+    return { success: true }
+  }
 }

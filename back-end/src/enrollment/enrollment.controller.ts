@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Req, UseGuards, Get, Query } from '@nestjs/common'
+import { Controller, Post, Body, Req, UseGuards, Get, Query, Delete } from '@nestjs/common'
 import { Request } from 'express'
 import { EnrollmentService } from './enrollment.service'
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
@@ -26,5 +26,12 @@ export class EnrollmentController {
   async getMyEnrollments(@Req() req: Request) {
     const userId = (req.user as { sub: number }).sub
     return await this.enrollmentService.getMyEnrollments(userId)
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete(':enrollmentId')
+  async cancelEnrollment(@Body('enrollmentId') enrollmentId: number, @Req() req: Request) {
+    const userId = (req.user as { sub: number }).sub
+    return await this.enrollmentService.cancelEnrollment(userId, enrollmentId)
   }
 }

@@ -14,7 +14,7 @@ class LLMService:
             raise ValueError("OPENAI_API_KEY is not set in the .env file")
 
         # OpenAI LLM 초기화
-        self.llm = ChatOpenAI(openai_api_key=api_key, model_name="gpt-4o", max_tokens=100)
+        self.llm = ChatOpenAI(openai_api_key=api_key, model_name="gpt-3.5-turbo", max_tokens=100)
     def call_llm(self, prompt: str) -> str:
         # LangChain의 OpenAI LLM을 호출
         response = self.llm(prompt)

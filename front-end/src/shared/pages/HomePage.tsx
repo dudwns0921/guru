@@ -1,9 +1,60 @@
 import { Link } from 'react-router-dom'
 import CourseList from '@/domains/course/components/CourseList'
 import { useAuth } from '@/domains/auth/hooks/useAuth'
+import { fetchCourses } from '@/domains/course/api/courseApi'
+import { useQuery } from '@tanstack/react-query'
+import { getPersonalizedCourses } from '@/domains/ai/api/aiApi'
+
+function FirstClassMessage() {
+  return (
+    <div className="text-center py-8 bg-brand-50 dark:bg-brand-100 rounded-lg px-2 sm:px-8">
+      <p className="text-lg text-sub mb-4 break-words" style={{ wordBreak: 'keep-all' }}>
+        개인화된 학습 경험을 시작하고 싶다면 첫 수업을 시작해보세요!
+      </p>
+      <button className="inline-block bg-brand-600 hover:bg-brand-700 text-white px-6 py-3 rounded-lg text-lg font-medium transition-colors">
+        첫 수업 시작하기
+      </button>
+    </div>
+  )
+}
+
+function LogInMessage() {
+  return (
+    <div className="text-center py-8 bg-brand-50 dark:bg-brand-100 rounded-lg px-2 sm:px-8">
+      <p className="text-lg text-sub mb-4 break-words" style={{ wordBreak: 'keep-all' }}>
+        개인화된 강의를 듣고 싶다면 로그인을 해주세요
+      </p>
+      <Link
+        to="/auth/login"
+        className="inline-block bg-brand-600 hover:bg-brand-700 text-white px-6 py-3 rounded-lg text-lg font-medium transition-colors"
+      >
+        로그인
+      </Link>
+    </div>
+  )
+}
 
 function HomePage() {
   const { isAuthenticated } = useAuth()
+
+  const {
+    data: courses,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ['courses'],
+    queryFn: fetchCourses,
+  })
+
+  const {
+    data: personalizedCourses,
+    isFetching: isPersonalizedFetching,
+    error: personalizedError,
+  } = useQuery({
+    queryKey: ['personalizedCourses'],
+    queryFn: getPersonalizedCourses,
+    enabled: isAuthenticated,
+  })
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-8">
@@ -32,30 +83,21 @@ function HomePage() {
           >
             추천 강의
           </h2>
-
           {isAuthenticated ? (
-            // 로그인된 상태
-            <div className="text-center py-8 bg-brand-50 dark:bg-brand-100 rounded-lg px-2 sm:px-8">
-              <p className="text-lg text-sub mb-4 break-words" style={{ wordBreak: 'keep-all' }}>
-                개인화된 학습 경험을 시작하고 싶다면 첫 수업을 시작해보세요!
-              </p>
-              <button className="inline-block bg-brand-600 hover:bg-brand-700 text-white px-6 py-3 rounded-lg text-lg font-medium transition-colors">
-                첫 수업 시작하기
-              </button>
-            </div>
+            Array.isArray(personalizedCourses) && personalizedCourses.length === 0 ? (
+              // 개인화 강의가 없는 경우
+              <FirstClassMessage />
+            ) : (
+              // 개인화 강의가 있는 경우
+              <CourseList
+                courses={personalizedCourses}
+                isLoading={isPersonalizedFetching}
+                error={personalizedError}
+              />
+            )
           ) : (
             // 로그인되지 않은 상태
-            <div className="text-center py-8 bg-brand-50 dark:bg-brand-100 rounded-lg px-2 sm:px-8">
-              <p className="text-lg text-sub mb-4 break-words" style={{ wordBreak: 'keep-all' }}>
-                개인화된 강의를 듣고 싶다면 로그인을 해주세요
-              </p>
-              <Link
-                to="/auth/login"
-                className="inline-block bg-brand-600 hover:bg-brand-700 text-white px-6 py-3 rounded-lg text-lg font-medium transition-colors"
-              >
-                로그인
-              </Link>
-            </div>
+            <LogInMessage />
           )}
         </div>
 
@@ -67,7 +109,7 @@ function HomePage() {
           >
             전체 강의
           </h2>
-          <CourseList />
+          <CourseList courses={courses} isLoading={isLoading} error={error} />
         </div>
       </div>
     </div>
