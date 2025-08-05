@@ -8,3 +8,11 @@ export const getMyEnrollments = async () => {
   }
   return response.data
 }
+
+export const cancelEnrollment = async (enrollmentId: number) => {
+  const response = await api.delete(`enrollment/${enrollmentId}`)
+  if (response.status !== 200) {
+    throw new Error(`Failed to cancel enrollment with ID ${enrollmentId}`)
+  }
+  return response.data
+}

@@ -1,14 +1,15 @@
 import { Button } from '@/shared/components/ui/button'
 
 interface EnrollButtonProps {
-  isEnrollmentLoading: boolean
-  isEnrolled?: { enrolled: boolean }
-  onClick?: () => void
-  error?: boolean
+  isEnrolled: boolean // 수강 여부
+  onClick: () => void // 수강 신청 콜백
+  onCancel: () => void // 수강 취소 콜백
+  isLoading?: boolean // 로딩 상태
+  error?: Error | null // 에러 상태
 }
 
-function EnrollButton({ isEnrollmentLoading, isEnrolled, onClick, error }: EnrollButtonProps) {
-  if (isEnrollmentLoading) {
+function EnrollButton({ isEnrolled, onClick, onCancel, isLoading, error }: EnrollButtonProps) {
+  if (isLoading) {
     return (
       <Button
         className="w-full mt-8 py-4 text-xl bg-brand-600 text-white rounded-lg"
@@ -19,6 +20,7 @@ function EnrollButton({ isEnrollmentLoading, isEnrolled, onClick, error }: Enrol
       </Button>
     )
   }
+
   if (error) {
     return (
       <>
@@ -35,19 +37,18 @@ function EnrollButton({ isEnrollmentLoading, isEnrolled, onClick, error }: Enrol
       </>
     )
   }
-  if (isEnrolled) {
-    return (
-      <Button
-        className="w-full mt-8 py-4 text-xl bg-brand-600 text-white rounded-lg"
-        size="lg"
-        disabled={isEnrolled.enrolled}
-        onClick={onClick}
-      >
-        {isEnrolled.enrolled ? '이미 수강 신청됨' : '수강 신청하기'}
-      </Button>
-    )
-  }
-  return null
+
+  return (
+    <Button
+      className={`w-full mt-8 py-4 text-xl rounded-lg ${
+        isEnrolled ? 'bg-red-600 hover:bg-red-700' : 'bg-brand-600 hover:bg-brand-700'
+      } text-white transition-colors`}
+      size="lg"
+      onClick={isEnrolled ? onCancel : onClick}
+    >
+      {isEnrolled ? '수강 취소' : '수강 신청하기'}
+    </Button>
+  )
 }
 
 export default EnrollButton

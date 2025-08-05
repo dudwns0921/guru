@@ -16,6 +16,7 @@ import type { EnrollmentCheckResponse } from '@/domains/enrollment/types/enrollm
 import { Badge } from '@/shared/components/ui/badge'
 import { getBadgeColor } from '@/utils/badgeColors'
 import EnrollButton from '../components/EnrollmentButton'
+import { cancelEnrollment } from '@/domains/enrollment/api/enrollmentApi'
 
 function CourseDetailPage() {
   const queryClient = useQueryClient()
@@ -109,6 +110,18 @@ function CourseDetailPage() {
     },
   })
 
+  // 수강 취소
+  const cancelEnrollmentMutation = useMutation({
+    mutationFn: (enrollmentId: number) => cancelEnrollment(enrollmentId),
+    onSuccess: () => {
+      alert('수강 취소가 완료되었습니다!')
+      queryClient.invalidateQueries({ queryKey: ['checkEnrollment', courseId] })
+    },
+    onError: () => {
+      alert('수강 취소에 실패했습니다.')
+    },
+  })
+
   if (isCourseLoading) return <CourseDetailSkeleton />
   if (courseError || !course)
     return <div className="text-main dark:text-main">강의 정보를 불러올 수 없습니다.</div>
@@ -173,10 +186,13 @@ function CourseDetailPage() {
             </div>
           </div>
           <EnrollButton
-            isEnrollmentLoading={isEnrollmentLoading}
-            isEnrolled={isEnrolled}
+            isLoading={isEnrollmentLoading || enrollMutation.isPending}
+            isEnrolled={isEnrolled?.enrolled ?? false}
             onClick={() => enrollMutation.mutate(course.id)}
-            error={isEnrollmentLoading === false && isEnrolled === undefined}
+            onCancel={() => {
+              cancelEnrollmentMutation.mutate(course.id)
+            }}
+            error={enrollMutation.error || cancelEnrollmentMutation.error}
           />
         </div>
       ) : (
