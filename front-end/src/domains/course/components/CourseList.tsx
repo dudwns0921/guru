@@ -1,18 +1,14 @@
-import { useQuery } from '@tanstack/react-query'
 import CourseCard from './CourseCard'
 import CourseCardSkeleton from './CourseCardSkeleton'
-import { fetchCourses } from '../api/courseApi'
+import type { Course } from '../types/course'
 
-function CourseList() {
-  const {
-    data: courses,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ['courses'],
-    queryFn: fetchCourses,
-  })
+interface CourseListProps {
+  courses: Course[] | undefined
+  isLoading: boolean
+  error: Error | null
+}
 
+function CourseList({ courses, isLoading, error }: CourseListProps) {
   // 로딩 상태에서 사용
   if (isLoading) {
     return (

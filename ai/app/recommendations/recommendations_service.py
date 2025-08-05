@@ -9,9 +9,9 @@ class RecommendationsService:
     def __init__(self, llm_service):
         self.llm_service = llm_service
 
-    def get_recommendations(self, user_preferences, courses: List[Course]) -> List[Course]:
+    def get_recommendations(self, user_preferences, courses: List[Course], myCoursesIds: List[int]) -> List[Course]:
         # LLM에 전달할 프롬프트 생성
-        prompt = build_prompt_for_recommendations(user_preferences, courses)
+        prompt = build_prompt_for_recommendations(user_preferences, courses, myCoursesIds)
         try:
             # LLM 호출
             response = self.llm_service.call_llm([HumanMessage(content=prompt)])

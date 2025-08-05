@@ -16,6 +16,12 @@ export class AiService {
     try {
       // 1. 수강 내역 가져오기
       const enrollments = await this.enrollmentService.getMyEnrollments(userId)
+      if (!enrollments || enrollments.length === 0) {
+        return {
+          success: true,
+          data: [],
+        }
+      }
 
       // 2. 태그별 가중치 계산
       const tagWeights = this.calculateTagWeights(enrollments)
@@ -26,6 +32,7 @@ export class AiService {
         user_id: userId,
         tag_weights: tagWeights,
         courses: courses,
+        myCoursesIds: enrollments.map(enrollment => enrollment.course.id),
       })
 
       console.log('AI 추천 결과:', response)

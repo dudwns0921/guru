@@ -14,4 +14,5 @@ class Course(BaseModel):
 class RecommendationRequest(BaseModel):
     user_id: int
     tag_weights: Dict[str, float]
-    courses: List[Course] = []  # Optional field to include courses in the request
+    courses: List[Course] = [] 
+    myCoursesIds: List[int] = [] 

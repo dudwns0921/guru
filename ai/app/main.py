@@ -12,7 +12,8 @@ async def post_recommendations(request: RecommendationRequest):
         recommendationsService = recommendations_service.RecommendationsService(llm_service=llmService)
         recommendations = recommendationsService.get_recommendations(
             user_preferences=request.tag_weights, 
-            courses=request.courses
+            courses=request.courses,
+            myCoursesIds=request.myCoursesIds
         )
         
         # 성공 시 데이터만 반환 (AI 모듈은 순수 데이터 반환)
