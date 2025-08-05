@@ -18,6 +18,22 @@ function FirstClassMessage() {
   )
 }
 
+function LogInMessage() {
+  return (
+    <div className="text-center py-8 bg-brand-50 dark:bg-brand-100 rounded-lg px-2 sm:px-8">
+      <p className="text-lg text-sub mb-4 break-words" style={{ wordBreak: 'keep-all' }}>
+        개인화된 강의를 듣고 싶다면 로그인을 해주세요
+      </p>
+      <Link
+        to="/auth/login"
+        className="inline-block bg-brand-600 hover:bg-brand-700 text-white px-6 py-3 rounded-lg text-lg font-medium transition-colors"
+      >
+        로그인
+      </Link>
+    </div>
+  )
+}
+
 function HomePage() {
   const { isAuthenticated } = useAuth()
 
@@ -32,13 +48,14 @@ function HomePage() {
 
   const {
     data: personalizedCourses,
-    isLoading: isPersonalizedLoading,
+    isFetching: isPersonalizedFetching,
     error: personalizedError,
   } = useQuery({
     queryKey: ['personalizedCourses'],
-    queryFn: () => getPersonalizedCourses(),
-    enabled: isAuthenticated, // 로그인된 경우에만 호출
+    queryFn: getPersonalizedCourses,
+    enabled: isAuthenticated,
   })
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-8">
       <div className="flex flex-col gap-16">
@@ -67,30 +84,20 @@ function HomePage() {
             추천 강의
           </h2>
           {isAuthenticated ? (
-            personalizedCourses && personalizedCourses.length > 0 ? (
-              // 로그인된 상태에서 추천 강의가 있는 경우
+            Array.isArray(personalizedCourses) && personalizedCourses.length === 0 ? (
+              // 개인화 강의가 없는 경우
+              <FirstClassMessage />
+            ) : (
+              // 개인화 강의가 있는 경우
               <CourseList
                 courses={personalizedCourses}
-                isLoading={isPersonalizedLoading}
+                isLoading={isPersonalizedFetching}
                 error={personalizedError}
               />
-            ) : (
-              // 로그인된 상태에서 추천 강의가 없는 경우
-              <FirstClassMessage />
             )
           ) : (
             // 로그인되지 않은 상태
-            <div className="text-center py-8 bg-brand-50 dark:bg-brand-100 rounded-lg px-2 sm:px-8">
-              <p className="text-lg text-sub mb-4 break-words" style={{ wordBreak: 'keep-all' }}>
-                개인화된 강의를 듣고 싶다면 로그인을 해주세요
-              </p>
-              <Link
-                to="/auth/login"
-                className="inline-block bg-brand-600 hover:bg-brand-700 text-white px-6 py-3 rounded-lg text-lg font-medium transition-colors"
-              >
-                로그인
-              </Link>
-            </div>
+            <LogInMessage />
           )}
         </div>
 

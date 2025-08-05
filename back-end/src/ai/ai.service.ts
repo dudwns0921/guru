@@ -17,10 +17,7 @@ export class AiService {
       // 1. 수강 내역 가져오기
       const enrollments = await this.enrollmentService.getMyEnrollments(userId)
       if (!enrollments || enrollments.length === 0) {
-        return {
-          success: true,
-          data: [],
-        }
+        return [] // 수강 내역이 없으면 빈 배열 반환
       }
 
       // 2. 태그별 가중치 계산
@@ -43,7 +40,8 @@ export class AiService {
       // AI 모듈 관련 에러는 여기서 적절히 변환
       if (error instanceof AxiosError) {
         const status = error.response?.status
-        const message = error.response?.data?.detail || error.message
+        const data = error.response?.data as { detail?: string } | undefined
+        const message = data?.detail || error.message
 
         if (status === 400) {
           throw new BadRequestException(`AI 서비스 요청 오류: ${message}`)
