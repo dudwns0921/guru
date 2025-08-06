@@ -4,16 +4,31 @@ import { useAuth } from '@/domains/auth/hooks/useAuth'
 import { fetchCourses } from '@/domains/course/api/courseApi'
 import { useQuery } from '@tanstack/react-query'
 import { getPersonalizedCourses } from '@/domains/ai/api/aiApi'
+import type { Course } from '@/domains/course/types/course'
 
-function FirstClassMessage() {
+interface FirstClassMessageProps {
+  courses: Course[] | undefined
+}
+
+function FirstClassMessage({ courses }: FirstClassMessageProps) {
+  // 랜덤 코스 ID 생성 함수
+  const getRandomCourseId = () => {
+    if (!courses || courses.length === 0) return 1 // 기본값
+    const randomIndex = Math.floor(Math.random() * courses.length)
+    return courses[randomIndex].id
+  }
+
   return (
     <div className="text-center py-8 bg-brand-50 dark:bg-brand-100 rounded-lg px-2 sm:px-8">
       <p className="text-lg text-sub mb-4 break-words" style={{ wordBreak: 'keep-all' }}>
         개인화된 학습 경험을 시작하고 싶다면 첫 수업을 시작해보세요!
       </p>
-      <button className="inline-block bg-brand-600 hover:bg-brand-700 text-white px-6 py-3 rounded-lg text-lg font-medium transition-colors">
+      <Link
+        to={`/course/${getRandomCourseId()}`}
+        className="inline-block bg-brand-600 hover:bg-brand-700 text-white px-6 py-3 rounded-lg text-lg font-medium transition-colors"
+      >
         첫 수업 시작하기
-      </button>
+      </Link>
     </div>
   )
 }
@@ -44,6 +59,9 @@ function HomePage() {
   } = useQuery({
     queryKey: ['courses'],
     queryFn: fetchCourses,
+    staleTime: 1000 * 60 * 20,
+    gcTime: 1000 * 60 * 60,
+    refetchOnWindowFocus: false,
   })
 
   const {
@@ -54,6 +72,10 @@ function HomePage() {
     queryKey: ['personalizedCourses'],
     queryFn: getPersonalizedCourses,
     enabled: isAuthenticated,
+    staleTime: 0,
+    gcTime: 0,
+    refetchOnMount: true,
+    refetchOnWindowFocus: false,
   })
 
   return (
@@ -86,7 +108,7 @@ function HomePage() {
           {isAuthenticated ? (
             Array.isArray(personalizedCourses) && personalizedCourses.length === 0 ? (
               // 개인화 강의가 없는 경우
-              <FirstClassMessage />
+              <FirstClassMessage courses={courses} />
             ) : (
               // 개인화 강의가 있는 경우
               <CourseList
