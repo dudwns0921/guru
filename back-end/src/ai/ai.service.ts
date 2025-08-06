@@ -12,6 +12,15 @@ export class AiService {
     private readonly courseService: CourseService,
   ) {}
 
+  async getChatResponse(user_input: string) {
+    const response = await this.callAiModule('chat', {
+      user_input: user_input,
+    })
+
+    console.log('AI 챗봇 응답:', response)
+    return response
+  }
+
   async getRecommendations(userId: number) {
     try {
       // 1. 수강 내역 가져오기
