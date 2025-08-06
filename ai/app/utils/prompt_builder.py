@@ -1,13 +1,23 @@
 from typing import Dict, List
-from app.recommendations.models.RecommendationRequest import Course
+
+from app.course.dto.CourseDto import Course
 
 
-def build_prompt_for_recommendations(user_preferences: Dict[str, float], courses: List[Course], myCoursesIds: List[int]) -> str:
+def build_prompt_for_recommendations(
+    user_preferences: Dict[str, float], courses: List[Course], myCoursesIds: List[int]
+) -> str:
     """
     사용자 선호도와 코스 데이터를 기반으로 LLM에 전달할 프롬프트를 생성합니다.
     """
-    preferences_str = ", ".join([f"{tag}: {weight}" for tag, weight in user_preferences.items()])
-    courses_str = "\n".join([f"ID {course.id}: {course.title} (Tags: {', '.join(course.tags)})" for course in courses])
+    preferences_str = ", ".join(
+        [f"{tag}: {weight}" for tag, weight in user_preferences.items()]
+    )
+    courses_str = "\n".join(
+        [
+            f"ID {course.id}: {course.title} (Tags: {', '.join(course.tags)})"
+            for course in courses
+        ]
+    )
 
     my_courses_str = ", ".join(map(str, myCoursesIds))
 
