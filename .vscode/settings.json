@@ -1,10 +1,12 @@
-{
-    "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": "explicit"
+{   
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true // 파이썬 파일 저장 시 포매팅 활성화
     },
-    "editor.formatOnSave": false,
-    "editor.defaultFormatter": null,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    },
+    "editor.formatOnSave": false, // 다른 파일은 저장 시 포매팅 비활성화
     "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "tsx"],
     "prettier.configPath": "../prettier.config.js"
-  }
-  
+}
