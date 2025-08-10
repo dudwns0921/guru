@@ -17,6 +17,7 @@ langchain = "^0.3.27"
 langchain-community = "^0.3.27"
 openai = "^1.98.0"
 langchain-openai = "^0.3.28"
+httpx = "^0.28.1"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
