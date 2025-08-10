@@ -11,3 +11,15 @@ export const getPersonalizedCourses = async (): Promise<Course[]> => {
   }
   return response.data.data
 }
+
+export const postChat = async (userInput: string) => {
+  const response = await api.post<{
+    success: boolean
+    data: { type: 'chat' | 'recommendations'; content: string | number[] }
+  }>('ai/chat', { user_input: userInput })
+  console.log(response)
+  if (response.status !== 201) {
+    throw new Error('Failed to post chat')
+  }
+  return response.data.data
+}

@@ -25,7 +25,7 @@ class SearchCoursesTool(BaseTool):
         self._course_service = course_service
         print("[DEBUG] SearchCoursesTool initialized with CourseService.")
 
-    def _run(self) -> List[Dict]:
+    def _run(self) -> List[int]:
         """
         동기적으로 강의를 검색합니다.
         """
@@ -33,7 +33,7 @@ class SearchCoursesTool(BaseTool):
             "SearchCoursesTool은 비동기적으로만 동작합니다. '_arun' 메서드를 사용하세요."
         )
 
-    async def _arun(self, query: str) -> List[Dict]:
+    async def _arun(self, query: str) -> List[int]:
         """
         비동기적으로 강의를 검색합니다.
         """
@@ -49,5 +49,9 @@ class SearchCoursesTool(BaseTool):
         ]
         print(f"[DEBUG] Found {len(recommended_courses)} recommended courses.")
 
+        # 추천된 강의의 id만 추출
+        recommended_course_ids = [course["id"] for course in recommended_courses]
+        print(f"[DEBUG] Extracted course IDs: {recommended_course_ids}")
+
         # 추천 결과 반환
-        return recommended_courses
+        return recommended_course_ids

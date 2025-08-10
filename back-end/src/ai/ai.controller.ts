@@ -4,6 +4,14 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { Request } from 'express'
 import { ApiBearerAuth, ApiBody } from '@nestjs/swagger'
 import { ChatRequestDto } from './dto/chat-request.dto'
+import { Course } from 'src/course/course.entity'
+
+export type AiEndpoint = 'chat' | 'recommendations'
+
+export interface AiResponseMap<T extends AiEndpoint> {
+  chat: { type: T; content: string | number[] }
+  recommendations: Course[]
+}
 
 @ApiBearerAuth()
 @Controller('ai')
@@ -28,7 +36,7 @@ export class AiController {
 
   @UseGuards(JwtAuthGuard)
   @Post('chat')
-  @ApiBody({ type: ChatRequestDto }) // Swagger에 요청 본문 정의 추가
+  @ApiBody({ type: ChatRequestDto })
   async postChat(@Body() body: ChatRequestDto) {
     // 요청 본문에서 사용자 입력 추출
     const { user_input } = body

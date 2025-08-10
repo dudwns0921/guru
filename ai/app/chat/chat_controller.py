@@ -24,7 +24,7 @@ async def post_chat(
         response = await chat_service.chat(user_input=chat_request.user_input)
         print(f"[INFO] ChatService response: {response}")
 
-        return ChatResponseDto(response=response)
+        return ChatResponseDto(**response)
 
     except ValueError as ve:
         print(f"[ERROR] ValueError occurred: {str(ve)}")

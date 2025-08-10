@@ -4,6 +4,7 @@ import { getAIServerUrl } from 'src/app.util'
 import { CourseService } from 'src/course/course.service'
 import { Enrollment } from 'src/enrollment/enrollment.entity'
 import { EnrollmentService } from 'src/enrollment/enrollment.service'
+import { AiEndpoint, AiResponseMap } from './ai.controller'
 
 @Injectable()
 export class AiService {
@@ -82,8 +83,8 @@ export class AiService {
     return tagWeights
   }
 
-  private async callAiModule(endPoint: string, data: unknown): Promise<unknown> {
-    const response = await axios.post(`${getAIServerUrl()}${endPoint}`, data)
+  private async callAiModule<T extends AiEndpoint>(endPoint: T, data: unknown) {
+    const response = await axios.post<AiResponseMap<T>>(`${getAIServerUrl()}${endPoint}`, data)
     return response.data
   }
 }
