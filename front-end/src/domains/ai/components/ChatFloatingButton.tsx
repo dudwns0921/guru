@@ -1,3 +1,4 @@
+import { useAuth } from '@/domains/auth/hooks/useAuth'
 import { MessageCircle } from 'lucide-react'
 
 interface ChatFloatingButtonProps {
@@ -5,6 +6,10 @@ interface ChatFloatingButtonProps {
 }
 
 function ChatFloatingButton({ onClick }: ChatFloatingButtonProps) {
+  const { isAuthenticated } = useAuth()
+  if (!isAuthenticated) {
+    return null
+  }
   return (
     <div className="fixed bottom-4 right-4 z-50">
       <button
