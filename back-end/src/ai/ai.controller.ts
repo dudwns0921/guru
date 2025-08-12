@@ -8,8 +8,8 @@ import { Course } from 'src/course/course.entity'
 
 export type AiEndpoint = 'chat' | 'recommendations'
 
-export interface AiResponseMap<T extends AiEndpoint> {
-  chat: { type: T; content: string | number[] }
+export interface AiResponseMap {
+  chat: { type: 'chat' | 'recommendations'; content: string | number[] }
   recommendations: Course[]
 }
 

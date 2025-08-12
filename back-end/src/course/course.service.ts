@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
+import { In, Repository } from 'typeorm'
 import { Course } from './course.entity'
 
 @Injectable()
@@ -21,5 +21,13 @@ export class CourseService {
 
   findOne(id: number): Promise<Course | null> {
     return this.courseRepository.findOne({ where: { id } })
+  }
+
+  findByIds(ids: number[]): Promise<Course[]> {
+    return this.courseRepository.find({
+      where: {
+        id: In(ids),
+      },
+    })
   }
 }

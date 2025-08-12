@@ -18,7 +18,18 @@ export class AiService {
       user_input: user_input,
     })
 
-    console.log('AI 챗봇 응답:', response)
+    if (response.type === 'recommendations') {
+      try {
+        const courses = await this.courseService.findByIds(response.content as number[])
+        return { ...response, content: courses }
+      } catch (err) {
+        console.error('Error fetching courses for recommendations:', err)
+        throw new InternalServerErrorException(
+          '추천 코스 데이터를 가져오는 중 오류가 발생했습니다.',
+        )
+      }
+    }
+
     return response
   }
 
@@ -84,7 +95,7 @@ export class AiService {
   }
 
   private async callAiModule<T extends AiEndpoint>(endPoint: T, data: unknown) {
-    const response = await axios.post<AiResponseMap<T>>(`${getAIServerUrl()}${endPoint}`, data)
+    const response = await axios.post<AiResponseMap[T]>(`${getAIServerUrl()}${endPoint}`, data)
     return response.data
   }
 }
