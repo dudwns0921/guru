@@ -12,7 +12,9 @@ class SearchCoursesInput(BaseModel):
 # SearchCoursesTool 정의
 class SearchCoursesTool(BaseTool):
     name: str = "SearchCourses"
-    description: str = "사용자의 요청에 따라 강의를 검색하고 추천합니다."
+    description: str = (
+        "사용자의 요청에 따라 강의를 검색하고 추천합니다. 결과는 추천 강의 ID 목록입니다."
+    )
     args_schema: Optional[BaseModel] = SearchCoursesInput
 
     # course_service를 Pydantic 필드에서 제외

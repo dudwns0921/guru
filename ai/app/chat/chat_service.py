@@ -1,24 +1,34 @@
 import json  # JSON 파싱을 위해 추가
 from typing import List, Dict, Union
 from langchain.prompts import PromptTemplate
-from langchain.agents import initialize_agent, Tool
+from langchain.agents import Tool
+from langchain.output_parsers import ResponseSchema, StructuredOutputParser
 
 
 class ChatService:
     def __init__(self, llm_service):
         self.llm_service = llm_service
+        response_schemas = [
+            ResponseSchema(
+                name="type", description="응답 유형 ('recommendations' 또는 'chat')"
+            ),
+            ResponseSchema(
+                name="content",
+                description="추천 강의 ID 목록 int[] 형태 (recommendations일 경우) 또는 일반 대화 내용 (chat일 경우)",
+            ),
+        ]
+        # StructuredOutputParser 생성
+        self.output_parser = StructuredOutputParser.from_response_schemas(
+            response_schemas
+        )
         self.default_prompt = PromptTemplate(
-            input_variables=["user_input"],
+            input_variables=["user_input", "format_instructions"],
             template=(
                 "당신은 다재다능한 AI 비서입니다. 사용자의 요청에 따라 적절히 응답하세요.\n"
                 "1. 사용자가 강의 추천을 요청하면, 반드시 도구를 호출하여 검색 결과를 확인한 후 강의를 추천하세요.\n"
                 "2. 사용자가 강의 추천이 아닌 일반 대화를 요청하면, 적절한 대화로 응답하세요.\n"
-                "반드시 아래와 같은 JSON 형식으로만 응답하세요:\n"
-                "{{\n"
-                '  "type": "recommendations" or "chat",\n'
-                '  "content": [1, 2, 3] (강의 추천 시) 또는 "그냥 말" (일반 대화 시)\n'
-                "}}\n\n"
-                "JSON 형식 외의 응답은 허용되지 않습니다.\n"
+                "반드시 아래 형식에 맞게 응답하세요:\n"
+                "{format_instructions}\n\n"
                 "사용자 입력: {user_input}"
             ),
         )
@@ -48,36 +58,34 @@ class ChatService:
         if not self.agent:
             raise ValueError("Agent is not initialized. Call initialize_agent first.")
 
-        # 프롬프트 템플릿을 사용하여 사용자 입력을 처리
-        try:
-            prompt = self.default_prompt.format(user_input=user_input)
-        except Exception as e:
-            print(f"[ERROR] Failed to format prompt: {str(e)}")
-            raise
+        # 프롬프트 생성
+        prompt = self.default_prompt.format(
+            user_input=user_input,
+            format_instructions=self.output_parser.get_format_instructions(),
+        )
 
         # 에이전트 호출
-        try:
-            print(f"[INFO] Sending prompt to agent: {prompt}")
-            response = await self.agent.arun(prompt)
-            print(f"[INFO] Agent response: {response}")
-        except Exception as e:
-            print(f"[ERROR] Failed to get response from agent: {str(e)}")
-            raise
+        response = await self.agent.arun(prompt)
 
-        # JSON 응답 파싱
+        # 응답 파싱
         try:
-            parsed_response = json.loads(response)  # JSON 문자열을 안전하게 파싱
-            if (
-                not isinstance(parsed_response, dict)
-                or "type" not in parsed_response
-                or "content" not in parsed_response
-            ):
-                raise ValueError("Invalid response format from agent.")
-        except json.JSONDecodeError as e:
-            print(f"[ERROR] Failed to parse agent response as JSON: {str(e)}")
-            raise ValueError("Agent response is not in the expected JSON format.")
-        except Exception as e:
-            print(f"[ERROR] Unexpected error while parsing agent response: {str(e)}")
-            raise
+            parsed_response = self.output_parser.parse(response)
 
-        return parsed_response
+            # 추천 강의 ID 목록을 배열로 강제 변환
+            if parsed_response["type"] == "recommendations":
+                if isinstance(parsed_response["content"], str):
+                    try:
+                        parsed_response["content"] = json.loads(
+                            parsed_response["content"]
+                        )
+                    except json.JSONDecodeError:
+                        raise ValueError(
+                            "Invalid content format: Expected a JSON array."
+                        )
+
+                if not isinstance(parsed_response["content"], list):
+                    parsed_response["content"] = []
+
+            return parsed_response
+        except Exception as e:
+            raise ValueError(f"Failed to parse response: {str(e)}")
