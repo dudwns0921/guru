@@ -1,10 +1,12 @@
+import { Link } from 'react-router-dom' // Link 컴포넌트 추가
 import type { BaseChatMessage } from '../contexts/AiContext'
+import type { Course } from '@/domains/course/types/course'
 
 // AI 메시지 타입
 export interface IAiChatMessage extends BaseChatMessage {
   from: 'ai'
   type: 'chat' | 'recommendations'
-  content: string | number[] // type에 따라 content의 타입이 달라짐
+  content: string | Course[] // type에 따라 content의 타입이 달라짐
   createdAt: Date // 메시지 생성 시간
 }
 
@@ -26,9 +28,19 @@ function AiChatMessage({ type, content, createdAt }: IAiChatMessage) {
           {type === 'chat' && typeof content === 'string' ? (
             <span>{content}</span>
           ) : type === 'recommendations' && Array.isArray(content) ? (
-            <ul className="list-disc pl-5">
-              {content.map(id => (
-                <li key={id}>추천 코스 ID: {id}</li>
+            <ul className="space-y-2">
+              {content.map(course => (
+                <li key={course.id} className="flex flex-col">
+                  <Link
+                    to={`/course/${course.id}`} // 페이지 내 이동을 위한 Link 컴포넌트
+                    className="text-blue-600 font-semibold hover:underline"
+                  >
+                    {course.title} {/* 강의 제목 */}
+                  </Link>
+                  <p className="text-gray-600 text-xs mt-1">
+                    {course.description} {/* 강의 설명 */}
+                  </p>
+                </li>
               ))}
             </ul>
           ) : (

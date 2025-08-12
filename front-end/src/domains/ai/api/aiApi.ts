@@ -15,7 +15,7 @@ export const getPersonalizedCourses = async (): Promise<Course[]> => {
 export const postChat = async (userInput: string) => {
   const response = await api.post<{
     success: boolean
-    data: { type: 'chat' | 'recommendations'; content: string | number[] }
+    data: { type: 'chat' | 'recommendations'; content: string | Course[] }
   }>('ai/chat', { user_input: userInput })
   console.log(response)
   if (response.status !== 201) {

@@ -1,18 +1,20 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import useAi from '../hooks/useAi'
 import AiChatMessage from './AiChatMessage'
 import UserChatMessage from './UserChatMessage'
-import { Send, X } from 'lucide-react' // lucide-react의 Send와 X 아이콘 추가
+import { Send, X, Loader } from 'lucide-react' // Loader 아이콘 추가
 import { postChat } from '../api/aiApi'
+import type { Course } from '@/domains/course/types/course'
 
 function ChatComponent({ toggleChat }: { toggleChat: () => void }) {
   const { chatMessages, pushMessage } = useAi()
   const [inputValue, setInputValue] = useState('') // 입력 값 상태 관리
+  const chatContainerRef = useRef<HTMLDivElement>(null) // 채팅 메시지 영역 참조
 
   // useMutation을 사용하여 postChat API 호출
   const mutation = useMutation<
-    { type: 'chat' | 'recommendations'; content: string | number[] },
+    { type: 'chat' | 'recommendations'; content: string | Course[] },
     Error,
     string
   >({
@@ -41,7 +43,7 @@ function ChatComponent({ toggleChat }: { toggleChat: () => void }) {
   })
 
   const handleSendMessage = () => {
-    if (inputValue.trim() === '') return // 빈 입력 방지
+    if (inputValue.trim() === '' || mutation.isPending) return // 빈 입력 방지
 
     // 사용자 메시지 추가
     pushMessage({
@@ -64,6 +66,13 @@ function ChatComponent({ toggleChat }: { toggleChat: () => void }) {
     }
   }
 
+  // 새로운 메시지가 추가될 때 스크롤을 가장 아래로 이동
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
+    }
+  }, [chatMessages]) // chatMessages가 변경될 때마다 실행
+
   return (
     <div className="rounded-2xl shadow-lg overflow-hidden bg-white">
       {/* 채팅 헤더 */}
@@ -75,7 +84,10 @@ function ChatComponent({ toggleChat }: { toggleChat: () => void }) {
       </div>
 
       {/* 채팅 메시지 영역 */}
-      <div className="text-white p-4 space-y-2 h-80 overflow-y-auto">
+      <div
+        ref={chatContainerRef} // 메시지 영역 참조
+        className="text-white p-4 space-y-2 h-80 overflow-y-auto"
+      >
         {chatMessages.map((message, index) => {
           if (message.from === 'user') {
             return (
@@ -93,6 +105,16 @@ function ChatComponent({ toggleChat }: { toggleChat: () => void }) {
             )
           }
         })}
+
+        {/* 로딩 컴포넌트 */}
+        {mutation.isPending && (
+          <div className="text-left">
+            <div className="flex items-center space-x-2">
+              <Loader className="h-5 w-5 animate-spin text-gray-500" />
+              <span className="text-sm text-gray-500">AI가 응답 중입니다...</span>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* 입력 영역 */}
