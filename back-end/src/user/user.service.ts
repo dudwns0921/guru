@@ -14,7 +14,7 @@ export class UserService {
     // User와 관련된 모든 데이터 삭제
     const user = await this.userRepository.findOne({
       where: { id },
-      relations: ['enrollments', 'reviews', 'courseViews', 'searchHistory'],
+      relations: ['enrollments', 'reviews'],
     })
     if (!user) return
 
