@@ -35,7 +35,7 @@ function FirstClassMessage({ courses }: FirstClassMessageProps) {
 
 function LogInMessage() {
   return (
-    <div className="text-center py-8 bg-brand-50 dark:bg-brand-100 rounded-lg px-2 sm:px-8">
+    <div className="text-center py-8 border border-border rounded-lg px-2 sm:px-8">
       <p className="text-lg text-sub mb-4 break-words" style={{ wordBreak: 'keep-all' }}>
         개인화된 강의를 듣고 싶다면 로그인을 해주세요
       </p>

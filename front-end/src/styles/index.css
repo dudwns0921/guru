@@ -38,11 +38,12 @@
   --muted: oklch(0.96 0.005 200);
   --shadow-hover-value: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 
-  --brand-50: oklch(0.92 0.15 240); /* 밝은 블루 */
-  --brand-100: oklch(0.82 0.18 240); /* 연한 블루 */
+  /* Docker 색상 기반 팔레트 */
+  --brand-50: oklch(0.92 0.08 240); /* 파스텔 톤 블루 */
+  --brand-100: #0db7ed; /* Docker 블루 */
   --brand-500: oklch(0.65 0.25 240); /* 메인 컬러 - 세련된 블루 */
-  --brand-600: oklch(0.55 0.3 240); /* 약간 어두운 블루 */
-  --brand-700: oklch(0.45 0.35 240); /* 더 어두운 블루 */
+  --brand-600: oklch(0.55 0.2 240); /* 약간 어두운 블루 */
+  --brand-700: oklch(0.45 0.15 240); /* 차분하고 세련된 어두운 블루 */
 
   /* Text Colors - Light Mode */
   --text-main: oklch(0.15 0.02 220);
@@ -59,11 +60,12 @@
   --muted: oklch(0.18 0.01 200);
   --shadow-hover-value: 0 10px 32px rgba(255, 255, 255, 0.1);
 
-  --brand-50: oklch(0.92 0.15 240); /* 밝은 블루 */
-  --brand-100: oklch(0.82 0.18 240); /* 연한 블루 */
+  /* Docker 색상 기반 팔레트 - 다크 모드 */
+  --brand-50: oklch(0.85 0.08 240); /* 파스텔 톤 블루 */
+  --brand-100: #0db7ed; /* Docker 블루 */
   --brand-500: oklch(0.65 0.25 240); /* 메인 컬러 - 세련된 블루 */
-  --brand-600: oklch(0.55 0.3 240); /* 약간 어두운 블루 */
-  --brand-700: oklch(0.45 0.35 240); /* 더 어두운 블루 */
+  --brand-600: oklch(0.55 0.2 240); /* 약간 어두운 블루 */
+  --brand-700: oklch(0.45 0.15 240); /* 차분하고 세련된 어두운 블루 */
 
   /* Text Colors - Dark Mode */
   --text-main: oklch(0.95 0.01 220);

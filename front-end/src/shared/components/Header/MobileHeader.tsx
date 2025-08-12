@@ -85,13 +85,13 @@ function MobileHeader({
         >
           {/* X 버튼 */}
           <button
-            className="absolute top-4 right-4 rounded-md text-main bg-brand-50 hover:bg-brand-100 transition-colors"
+            className="absolute top-4 right-4 rounded-md text-main transition-colors"
             aria-label="메뉴 닫기"
             onClick={() => setOpen(false)}
           >
             <X className="w-6 h-6" />
           </button>
-          <div className="flex items-center h-16 text-lg font-bold text-main px-4 bg-brand-50">
+          <div className="flex items-center h-16 text-lg font-bold text-main px-4">
             {isAuthenticated ? `${user?.name}님, 안녕하세요!` : '안녕하세요! 로그인해주세요'}
           </div>
           <ul className="flex flex-col gap-0 px-4">
