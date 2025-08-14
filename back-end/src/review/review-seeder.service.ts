@@ -12,7 +12,7 @@ export class ReviewSeederService {
     private readonly dataSource: DataSource, // DataSource 주입
   ) {}
 
-  async resetReviewIdSequence() {
+  private async resetReviewIdSequence() {
     const queryRunner = this.dataSource.createQueryRunner()
     await queryRunner.connect()
 
@@ -27,17 +27,23 @@ export class ReviewSeederService {
   async seed() {
     console.log('Seeding reviews...')
 
-    for (const review of seedReviews) {
-      // Check if a review with the same id already exists
-      const existingReview = await this.reviewRepository.findOne({ where: { id: review.id } })
-      if (existingReview) {
-        console.log(`Review with id ${review.id} already exists. Skipping.`)
-        continue
-      }
+    try {
+      await this.resetReviewIdSequence()
 
-      // Insert the data
-      await this.reviewRepository.save(review)
-      console.log(`Review with id ${review.id} seeded.`)
+      for (const review of seedReviews) {
+        // Check if a review with the same id already exists
+        const existingReview = await this.reviewRepository.findOne({ where: { id: review.id } })
+        if (existingReview) {
+          console.log(`Review with id ${review.id} already exists. Skipping.`)
+          continue
+        }
+
+        // Insert the data
+        await this.reviewRepository.save(review)
+        console.log(`Review with id ${review.id} seeded.`)
+      }
+    } catch (error) {
+      console.error('Error seeding reviews:', error)
     }
 
     console.log('Reviews seeding completed.')
