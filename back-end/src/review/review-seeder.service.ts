@@ -12,40 +12,46 @@ export class ReviewSeederService {
     private readonly dataSource: DataSource, // DataSource 주입
   ) {}
 
-  private async resetReviewIdSequence() {
-    const queryRunner = this.dataSource.createQueryRunner()
-    await queryRunner.connect()
-
-    try {
-      await queryRunner.query('ALTER SEQUENCE "review_id_seq" RESTART WITH 1;')
-      console.log('Review ID sequence reset.')
-    } finally {
-      await queryRunner.release()
-    }
-  }
-
   async seed() {
     console.log('Seeding reviews...')
 
     try {
-      await this.resetReviewIdSequence()
-
       for (const review of seedReviews) {
-        // Check if a review with the same id already exists
+        // 동일한 id가 이미 존재하는지 확인
         const existingReview = await this.reviewRepository.findOne({ where: { id: review.id } })
         if (existingReview) {
           console.log(`Review with id ${review.id} already exists. Skipping.`)
           continue
         }
 
-        // Insert the data
-        await this.reviewRepository.save(review)
+        // 데이터 삽입 (ID를 명시적으로 지정)
+        const newReview = this.reviewRepository.create(review)
+        await this.reviewRepository.save(newReview)
         console.log(`Review with id ${review.id} seeded.`)
       }
+
+      // 시딩 완료 후 시퀀스를 최대 ID + 1로 설정
+      await this.resetReviewIdSequenceToMax()
+
+      console.log('Reviews seeding completed.')
     } catch (error) {
       console.error('Error seeding reviews:', error)
     }
+  }
 
-    console.log('Reviews seeding completed.')
+  private async resetReviewIdSequenceToMax() {
+    const queryRunner = this.dataSource.createQueryRunner()
+    await queryRunner.connect()
+
+    try {
+      // 현재 데이터베이스의 최대 ID를 찾아서 다음 시퀀스로 설정
+      const maxId = await this.reviewRepository.maximum('id')
+      const nextId = (maxId || 0) + 1
+
+      await queryRunner.query(`ALTER SEQUENCE "review_id_seq" RESTART WITH ${nextId};`)
+      console.log(`Review ID sequence reset to ${nextId}.`)
+    } finally {
+      await queryRunner.release()
+    }
   }
 }
