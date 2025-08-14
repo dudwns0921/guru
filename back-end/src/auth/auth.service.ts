@@ -1,4 +1,4 @@
-import { Injectable, ConflictException } from '@nestjs/common'
+import { Injectable, ConflictException, UnauthorizedException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import * as bcrypt from 'bcrypt'
@@ -43,15 +43,20 @@ export class AuthService {
     return await this.userRepository.save(user)
   }
 
-  async validateUser(email: string, password: string): Promise<User | null> {
+  async validateUser(email: string, password: string): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { email, isActive: true },
     })
 
+    if (!user) {
+      throw new UnauthorizedException('사용자를 찾을 수 없습니다.')
+    }
+
     if (user && (await bcrypt.compare(password, user.password))) {
       return user
     }
-    return null
+
+    throw new UnauthorizedException('비밀번호가 일치하지 않습니다.')
   }
 
   // JWT 토큰 생성 메서드 추가

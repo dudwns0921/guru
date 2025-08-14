@@ -31,8 +31,18 @@ export function LoginForm({ onSuccess, onError, error }: LoginFormProps) {
         onError?.(response.message || '로그인에 실패했습니다.')
       }
     },
-    onError: error => {
-      onError?.(error instanceof Error ? error.message : '로그인에 실패했습니다.')
+    onError: (error: any) => {
+      console.log('Login error:', error)
+
+      let errorMessage = '로그인에 실패했습니다.'
+
+      if (error?.response?.data?.message) {
+        errorMessage = error.response.data.message
+      } else if (error?.message) {
+        errorMessage = error.message
+      }
+
+      onError?.(errorMessage)
     },
   })
 
