@@ -35,7 +35,7 @@ function MyReviewCard({
 }: MyReviewCardProps) {
   const [hoverRating, setHoverRating] = useState<number | null>(null)
   return (
-    <div className="mb-8 p-6 rounded-xl border border-brand-600 bg-brand-50 dark:bg-brand-900 shadow">
+    <div className="mb-8 p-6 rounded-xl border border-border shadow">
       <h3 className="text-xl font-bold mb-4 text-brand-600 dark:text-brand-600">
         내가 작성한 리뷰
       </h3>
@@ -48,10 +48,7 @@ function MyReviewCard({
           }}
         >
           <div className="flex items-center gap-2 mb-2">
-            <Badge
-              variant="secondary"
-              className="text-brand-600 dark:text-brand-600 bg-brand-100 dark:bg-brand-900"
-            >
+            <Badge variant="secondary" className="text-brand-600 dark:text-brand-600 border-border">
               <Star className="w-4 h-4 mr-1" fill="currentColor" /> {editRating}
             </Badge>
             <span className="text-sm text-main dark:text-main">{myReview.user.name}</span>
@@ -100,10 +97,7 @@ function MyReviewCard({
       ) : (
         <>
           <div className="flex items-center gap-2 mb-2">
-            <Badge
-              variant="secondary"
-              className="text-brand-600 dark:text-brand-600 bg-brand-100 dark:bg-brand-900"
-            >
+            <Badge variant="secondary" className="text-brand-600 dark:text-brand-600 border-border">
               <Star className="w-4 h-4 mr-1" fill="currentColor" /> {myReview.rating}
             </Badge>
             <span className="text-sm text-main dark:text-main">{myReview.user.name}</span>

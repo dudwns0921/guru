@@ -28,21 +28,25 @@ function AiChatMessage({ type, content, createdAt }: IAiChatMessage) {
           {type === 'chat' && typeof content === 'string' ? (
             <span>{content}</span>
           ) : type === 'recommendations' && Array.isArray(content) ? (
-            <ul className="space-y-2">
-              {content.map(course => (
-                <li key={course.id} className="flex flex-col">
-                  <Link
-                    to={`/course/${course.id}`} // 페이지 내 이동을 위한 Link 컴포넌트
-                    className="text-blue-600 font-semibold hover:underline"
-                  >
-                    {course.title} {/* 강의 제목 */}
-                  </Link>
-                  <p className="text-gray-600 text-xs mt-1">
-                    {course.description} {/* 강의 설명 */}
-                  </p>
-                </li>
-              ))}
-            </ul>
+            content.length > 0 ? (
+              <ul className="space-y-2">
+                {content.map(course => (
+                  <li key={course.id} className="flex flex-col">
+                    <Link
+                      to={`/course/${course.id}`} // 페이지 내 이동을 위한 Link 컴포넌트
+                      className="text-blue-600 font-semibold hover:underline"
+                    >
+                      {course.title} {/* 강의 제목 */}
+                    </Link>
+                    <p className="text-gray-600 text-xs mt-1">
+                      {course.description} {/* 강의 설명 */}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <span>추천해드릴 수 있는 강의가 없습니다 😅 원하시는 다른 강의가 있을까요?</span>
+            )
           ) : (
             <span className="text-red-500">알 수 없는 메시지 유형입니다.</span>
           )}

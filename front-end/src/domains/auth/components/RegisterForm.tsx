@@ -21,11 +21,22 @@ export function RegisterForm({ onSuccess, onError, error }: RegisterFormProps) {
 
   const registerMutation = useMutation({
     mutationFn: registerUser,
+
     onSuccess: user => {
       onSuccess?.(user)
     },
-    onError: error => {
-      onError?.(error instanceof Error ? error.message : '회원가입에 실패했습니다.')
+    onError: (error: any) => {
+      console.log('Register error:', error)
+
+      let errorMessage = '회원가입에 실패했습니다.'
+
+      if (error?.response?.data?.message) {
+        errorMessage = error.response.data.message
+      } else if (error?.message) {
+        errorMessage = error.message
+      }
+
+      onError?.(errorMessage)
     },
   })
 
